@@ -9,7 +9,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            # Define command-line scripts here
+            'laboratory=app:main',
         ],
     },
 )
