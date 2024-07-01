@@ -1,0 +1,14 @@
+<div class="article-content">
+    <h1>{{ article.title }}</h1>  <!-- Display article title -->
+    <h2>By {{ article.author }}</h2>  <!-- Display article author -->
+    <h3>Abstract</h3>
+    <p>{{ article.abstract }}</p>  <!-- Display article abstract -->
+    {% for section in article.sections %}  <!-- Loop through sections -->
+        <h3>{{ section.title }}</h3>
+        <p>{{ section.content }}</p>  <!-- Display section content -->
+        {% for subsection in section.subsections %}  <!-- Loop through subsections -->
+            <h4>{{ subsection.title }}</h4>
+            <p>{{ subsection.content }}</p>  <!-- Display subsection content -->
+        {% endfor %}
+    {% endfor %}
+</div>
