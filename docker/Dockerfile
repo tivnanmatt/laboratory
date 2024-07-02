@@ -23,11 +23,11 @@ RUN conda env create --name "laboratory" -f environment.yml
 SHELL ["conda", "run", "-n", "laboratory", "/bin/bash", "-c"]
 
 # install LEAP: a GPU-compatible CT forward projector
-WORKDIR /opt
-RUN git clone https://github.com/LLNL/LEAP.git
-WORKDIR /opt/LEAP
-RUN pip install -v .
-WORKDIR /
+# WORKDIR /opt
+# RUN git clone https://github.com/LLNL/LEAP.git
+# WORKDIR /opt/LEAP
+# RUN pip install -v .
+# WORKDIR /
 
 # copy the directory random_tensor_laboratory to the container
 WORKDIR /opt
@@ -35,4 +35,7 @@ RUN git clone https:///github.com/tivnanmatt/laboratory.git
 WORKDIR /opt/laboratory/python/
 RUN pip install -v .
 WORKDIR /home
+
+# Keep the container running by starting a bash shell
+CMD ["bash"]
 
