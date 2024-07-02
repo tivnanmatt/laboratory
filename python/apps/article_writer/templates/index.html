@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Research Article Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">  <!-- Link to the CSS file -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  <!-- Link to jQuery library -->
+    <script>
+        // Function to add a new section to the form
+        function addSection() {
+            var sectionCount = $('.section').length;  // Count current sections
+            var newSection = $('#sections-template').html().replace(/__prefix__/g, sectionCount);  // Create new section from template
+            $('#sections').append(newSection);  // Append new section to the form
+        }
+
+        // Function to add a new subsection to a specific section
+        function addSubsection(sectionIndex) {
+            var subsectionCount = $(`#section-${sectionIndex}-subsections .subsection`).length;  // Count current subsections
+            var newSubsection = $('#subsections-template').html().replace(/__s_prefix__/g, subsectionCount).replace(/__prefix__/g, sectionIndex);  // Create new subsection from template
+            $(`#section-${sectionIndex}-subsections`).append(newSubsection);  // Append new subsection to the form
+        }
+
+        $(document).ready(function() {
+            // Event handler to add a section
+            $('#add-section').click(function(e) {
+                e.preventDefault();
+                addSection();
+            });
+
+            // Event handler to add a subsection
+            $(document).on('click', '.add-subsection', function(e) {
+                e.preventDefault();
+                var sectionIndex = $(this).data('section');
+                addSubsection(sectionIndex);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="editor">
+            <form method="POST">  <!-- Form to collect user input -->
+                {{ form.hidden_tag() }}  <!-- CSRF token for security -->
+                <div>
+                    {{ form.title.label }}<br>  <!-- Label and input for article title -->
+                    {{ form.title(size=50) }}
+                </div>
+                <div>
+                    {{ form.author.label }}<br>  <!-- Label and input for article author -->
+                    {{ form.author(size=50) }}
+                </div>
+                <div>
+                    {{ form.abstract.label }}<br>  <!-- Label and input for article abstract -->
+                    {{ form.abstract(rows=5, cols=50) }}
+                </div>
+                <div id="sections">
+                    {% for section in form.sections %}  <!-- Loop through sections -->
+                        <div class="section" id="section-{{ loop.index0 }}">
+                            {{ section.title.label }}<br>  <!-- Label and input for section title -->
+                            {{ section.title(size=50) }}<br>
+                            {{ section.content.label }}<br>  <!-- Label and input for section content -->
+                            {{ section.content(rows=5, cols=50) }}<br>
+                            <div id="section-{{ loop.index0 }}-subsections">
+                                {% for subsection in section.subsections %}  <!-- Loop through subsections -->
+                                    <div class="subsection">
+                                        {{ subsection.title.label }}<br>  <!-- Label and input for subsection title -->
+                                        {{ subsection.title(size=50) }}<br>
+                                        {{ subsection.content.label }}<br>  <!-- Label and input for subsection content -->
+                                        {{ subsection.content(rows=5, cols=50) }}<br>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button class="add-subsection" data-section="{{ loop.index0 }}">Add Subsection</button>  <!-- Button to add subsection -->
+                        </div>
+                    {% endfor %}
+                </div>
+                <button id="add-section">Add Section</button>  <!-- Button to add section -->
+                <div>
+                    <label for="format">Output Format:</label>  <!-- Dropdown for output format selection -->
+                    <select name="format" id="format">
+                        <option value="html">HTML</option>
+                        <option value="markdown">Markdown</option>
+                        <option value="latex">LaTeX</option>
+                    </select>
+                </div>
+                <div>
+                    {{ form.submit() }}  <!-- Submit button -->
+                </div>
+            </form>
+        </div>
+        <div class="article">
+            {% if article_content %}  <!-- Check if there is article content to display -->
+                <pre>{{ article_content|safe }}</pre>  <!-- Display the article content -->
+            {% endif %}
+        </div>
+    </div>
+
+    <template id="sections-template">  <!-- Template for a new section -->
+        <div class="section" id="section-__prefix__">
+            <label for="sections-__prefix__-title">Section Title</label><br>
+            <input type="text" name="sections-__prefix__-title" id="sections-__prefix__-title" size="50"><br>
+            <label for="sections-__prefix__-content">Section Content</label><br>
+            <textarea name="sections-__prefix__-content" id="sections-__prefix__-content" rows="5" cols="50"></textarea><br>
+            <div id="section-__prefix__-subsections">
+                <div class="subsection">
+                    <label for="sections-__prefix__-subsections-0-title">Subsection Title</label><br>
+                    <input type="text" name="sections-__prefix__-subsections-0-title" id="sections-__prefix__-subsections-0-title" size="50"><br>
+                    <label for="sections-__prefix__-subsections-0-content">Subsection Content</label><br>
+                    <textarea name="sections-__prefix__-subsections-0-content" id="sections-__prefix__-subsections-0-content" rows="5" cols="50"></textarea><br>
+                </div>
+            </div>
+            <button class="add-subsection" data-section="__prefix__">Add Subsection</button>
+        </div>
+    </template>
+
+    <template id="subsections-template">  <!-- Template for a new subsection -->
+        <div class="subsection">
+            <label for="sections-__prefix__-subsections-__s_prefix__-title">Subsection Title</label><br>
+            <input type="text" name="sections-__prefix__-subsections-__s_prefix__-title" id="sections-__prefix__-subsections-__s_prefix__-title" size="50"><br>
+            <label for="sections-__prefix__-subsections-__s_prefix__-content">Subsection Content</label><br>
+            <textarea name="sections-__prefix__-subsections-__s_prefix__-content" id="sections-__prefix__-subsections-__s_prefix__-content" rows="5" cols="50"></textarea><br>
+        </div>
+    </template>
+</body>
+</html>

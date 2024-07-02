@@ -22,20 +22,27 @@ RUN conda env create --name "laboratory" -f environment.yml
 # Activate the conda environment for interactive shell sessions
 SHELL ["conda", "run", "-n", "laboratory", "/bin/bash", "-c"]
 
-# install LEAP: a GPU-compatible CT forward projector
-# WORKDIR /opt
-# RUN git clone https://github.com/LLNL/LEAP.git
-# WORKDIR /opt/LEAP
-# RUN pip install -v .
-# WORKDIR /
-
-# copy the directory random_tensor_laboratory to the container
+# Install LEAP: a GPU-compatible CT forward projector
 WORKDIR /opt
-RUN git clone https:///github.com/tivnanmatt/laboratory.git
+RUN git clone https://github.com/LLNL/LEAP.git
+WORKDIR /opt/LEAP
+RUN pip install -v .
+WORKDIR /
+
+# Copy the laboratory directory to the container
+WORKDIR /opt
+RUN git clone https://github.com/tivnanmatt/laboratory.git
 WORKDIR /opt/laboratory/python/
 RUN pip install -v .
 WORKDIR /home
 
-# Keep the container running by starting a bash shell
-CMD ["bash"]
+# Ensure the run.sh script is executable
+RUN chmod +x /opt/laboratory/python/apps/article_writer/run.sh
 
+# Expose port 5000
+EXPOSE 5000
+
+# Run the article writer app on port 5000 and keep the container running
+WORKDIR /opt/laboratory/python/apps/article_writer/
+RUN nohup ./run.sh --port 5000 &
+CMD ["tail", "-f", "/dev/null"]
