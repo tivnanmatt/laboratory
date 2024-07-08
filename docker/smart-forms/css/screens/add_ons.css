@@ -1,0 +1,16 @@
+.panel-footer{
+    text-align:right !important;
+    border: none !important;
+    background-color: transparent !important;
+    padding: 0 5px 2px 0 !important;
+}
+
+.panel{
+    cursor: hand !important;
+    cursor: pointer !important;
+}
+
+.sfLearnMore{
+    color:#909090;
+}
+

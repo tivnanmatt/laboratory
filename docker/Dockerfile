@@ -1,6 +1,9 @@
 # Use the official NVIDIA CUDA image with Conda pre-installed as a base
 FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
 
+# Set DEBIAN_FRONTEND to noninteractive to avoid prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install necessary system packages
 RUN apt-get update && apt-get install -y wget git libgl1-mesa-glx gnupg software-properties-common ffmpeg \
     nginx mariadb-server php-fpm php-mysql unzip
@@ -37,14 +40,11 @@ WORKDIR /opt/laboratory/python/
 RUN pip install -v .
 WORKDIR /home
 
-# Ensure the run.sh script is executable
-# RUN chmod +x /opt/laboratory/python/apps/article_writer/run.sh
-
 # Copy WordPress and Nginx configuration files
-COPY project_root/wordpress /var/www/html
-COPY project_root/docker/nginx/wordpress /etc/nginx/sites-available/wordpress
-COPY project_root/docker/init.sql /docker-entrypoint-initdb.d/
-COPY project_root/docker/startup.sh /opt/startup.sh
+COPY ./wordpress /var/www/html
+COPY ./nginx/wordpress /etc/nginx/sites-available/wordpress
+COPY ./init.sql /docker-entrypoint-initdb.d/
+COPY ./startup.sh /opt/startup.sh
 
 # Set permissions for WordPress files
 RUN chown -R www-data:www-data /var/www/html && \
@@ -53,8 +53,7 @@ RUN chown -R www-data:www-data /var/www/html && \
 # Enable the Nginx site configuration
 RUN ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
 
-# Expose port 5000 for your app and port 80 for Nginx
-# EXPOSE 5000 80
+# Expose port 80 for Nginx
 EXPOSE 80
 
 # Run the startup script

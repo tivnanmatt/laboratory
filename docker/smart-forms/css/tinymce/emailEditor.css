@@ -1,0 +1,31 @@
+.sfField {
+    background-color: #dfdfdf;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-color: #afafaf;
+    border-style: solid;
+    border-width: 1px;
+    text-overflow: ellipsis;
+    max-width: 10px;
+}
+
+.sfFixedField {
+    background-color: #D0EAFF;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-color: #afafaf;
+    border-style: solid;
+    border-width: 1px;
+    text-overflow: ellipsis;
+    max-width: 10px;
+}
+
+.SmartyDelimiter{
+    color:#F20056;
+}

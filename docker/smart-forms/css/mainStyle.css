@@ -1,0 +1,714 @@
+
+
+#rednaoSmartForms hr {
+    margin-right: 5px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+#rednaoSmartForms h2 {
+    margion-top: 0px;
+    margin-bottom: 0px;
+}
+
+#rednaoSmartForms .category {
+    margin-top: 10px;
+    margin-left:50px;
+
+}
+
+#rednaoSmartForms .description {
+}
+
+#rednaoSmartForms input {
+
+}
+
+
+
+#rednaoSmartForms .treeDiv{
+    cursor: hand;
+    cursor: pointer;
+}
+
+
+#rednaoSmartForms .treeButton{
+
+    display:inline;
+
+}
+
+#rednaoSmartForms .treeDiv h2{
+
+    display:inline;
+    font-family: verdana;
+
+
+
+}
+
+#rednaoSmartForms .description{
+    color:#A0A0A0;
+    font-family: helvetica;
+    font-size: smaller;
+    font-style: italic;
+}
+
+
+.rednaoformbuilder  .tempForm,.tutorialDraggedelement  .tempForm {
+    padding: 8px 4px !important;
+    border: 1px dotted #ccc !important;
+    position: absolute !important;    background: white !important;
+    box-shadow: 0 0 30px #999 !important;
+    -webkit-transition:
+        -webkit-transform .1s ease-out !important;
+    overflow: hidden !important;
+    width:570px !important;
+    z-index: 99999 !important;
+}
+
+
+.SmartFormsElementSelected{
+    position:relative;
+}
+
+
+.smartFormsActionMenu{
+   position: absolute;
+    right:1px;
+    top:1px;
+
+}
+.smartFormsActionMenu img{
+    width:20px;
+    height:20px;
+    margin-right: 5px;
+    cursor: hand;
+    cursor: pointer;
+
+}
+
+.formelement.last{
+    border-color: #dedede;
+    border-style: solid;
+    border-width: 5px;
+}
+
+.formelement.last p{
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 30px;
+    color: gray;
+}
+
+#sfSavedConditionList{
+  text-align: center !important   ;
+}
+
+.rednao-properties-control-label{
+    margin-right: 5px;
+}
+
+.listOfItems td,.listOfItems th{
+   padding-right: 5px;
+}
+
+#formSettingsScrollArea{
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    /* box-sizing: content-box; */
+}
+
+.smartFormsSettingsButton {
+    -moz-box-shadow: inset 0px 1px 0px 0px #f5978e;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #f5978e;
+    box-shadow: inset 0px 1px 0px 0px #f5978e;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
+    background: -moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: -webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: -o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: -ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+    background-color: #f24537;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #d02718;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff !important;
+    font-family: arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #810e05;
+}
+
+.sfConditionRow td{
+    padding-right: 5px;
+}
+
+#smartFormsAfterSubmitDiv input[type=checkbox]
+{
+    margin-top: 0px;
+}
+
+#smartFormsGeneralDiv .rednao-control-group{
+    cursor:pointer;
+    cursor:hand;
+}
+
+.rnMSRemoveStep{
+    position:absolute !important;
+    top:0 !important;
+    left:4px !important;
+    z-index:1000 !important;
+    color:lightgray !important;
+}
+
+.rnMSRemoveStep:hover{
+    color:#d43f3a !important;
+}
+#redNaoSmartFormsPlaceHolder{
+    clear:both;
+}
+
+
+.rednaotablist
+{
+    float:left;
+}
+
+.rednaotablist .component
+{
+    float:left;
+    width:100%;
+}
+
+#smartFormsGeneralDiv #target{
+    width:100%;
+}
+
+.formelement.last
+{
+    clear:both;
+}
+
+.sfAddIcon{
+    color:#ccc;
+}
+
+
+.sfAddIcon:hover,
+.sfAddIcon.sfSelected{
+    color:#428bca;
+}
+
+.sfActionIcon{
+    cursor:hand;
+    cursor:pointer;
+}
+
+.sfActionIcon:hover{
+    color:#ff0000;
+    -webkit-transition: color ease-in-out 0.15s;
+    -o-transition: color ease-in-out 0.15s;
+    transition: color ease-in-out 0.15s;
+}
+
+.bootstrap-wrapper .sfDelete:hover{
+    color:red;
+
+}
+
+.bootstrap-wrapper .sfConditionLogic:hover{
+    color:blue;
+
+}
+
+.bootstrap-wrapper .modal-content{
+    max-height: 700px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sfHelpIconContainer{
+    padding: 10px;
+    -webkit-border-top-left-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    cursor:hand;
+    cursor:pointer;
+}
+
+.sfHelpContent{
+    width: 400px;
+    background-color: white;
+    height: 100%;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.sfHelper{
+	width:auto !important;
+}
+
+.smartFormsSlider .ui-widget-overlay{
+    z-index: 1000001 !important;
+}
+
+.select2-drop{
+ z-index: 2000005 !important;
+}
+
+.select2-drop-mask{
+    z-index: 1000003 !important;
+}
+
+.smartFormsSlider .ui-dialog {
+    z-index: 1000002 !important;
+}
+
+#redNaoEmailEditor{
+    z-index: 1000008 !important;
+}
+
+.smartFormsSlider .ui-dialog-titlebar-close:before{
+    content:normal;
+}
+
+.licenseDiv .ui-dialog{
+    z-index:2000000 !important;
+}
+
+.smartFormsFieldPickerOverlay.smartFormsSlider .ui-widget-overlay {
+    z-index: 1000001 !important;
+}
+
+.mce-floatpanel,.mce-tooltip{
+    z-index: 1000010 !important;
+}
+
+
+
+#mce-modal-block{
+    z-index: 1000009 !important;
+}
+
+.bootstrap-wrapper .modal{
+    z-index:1000008 !important;
+}
+
+#smartFormName{
+    border:1px solid transparent;
+    border-bottom:1px solid #dfdfdf;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.bootstrap-wrapper .rednao-control-group{
+    position: relative !important;
+}
+
+#formBuilderComponents li, #formBuilderComponents li a{
+    cursor:pointer !important;
+    user-select: none;
+}
+
+#smartFormName:hover{
+    border: #007cba 1px solid;
+}
+
+
+#ExitButton,.faqIcon{
+    transition: color 200ms ease-in-out;
+}
+
+#ExitButton:hover,.faqIcon:hover{
+    color:red;
+    cursor: pointer;
+}
+
+.sfNotReceivingEmail{
+    color:blue;
+    text-decoration: underline;
+}
+
+.sfLabelLayoutContainer .tooltip-inner{
+    max-width: 420px;
+}
+
+.sfDragRuller{
+    border:1px;
+    border-color:red;
+    border-style: dashed;
+    width:50px;
+    position: absolute;
+    z-index: 1000000;
+    -webkit-transition: top 200ms ease-out,width 200ms ease-out,height 200ms ease-out,left 200ms ease-out,opacity 200ms ease-out;;
+    -moz-transition: top 200ms ease-out,width 200ms ease-out,height 200ms ease-out,left 200ms ease-out,opacity 200ms ease-out;
+    -ms-transition: top 200ms ease-out,width 200ms ease-out,height 200ms ease-out,left 200ms ease-out, opacity 200ms ease-out;;
+    -o-transition: top 200ms ease-out,width 200ms ease-out,height 200ms ease-out,left 200ms ease-out,opacity 200ms ease-out;;
+    transition: top 200ms ease-out,width 200ms ease-out,height 200ms ease-out,left 200ms ease-out,opacity 200ms ease-out;;
+}
+
+.rnTemporalHidden {
+    position: absolute !important;
+    visibility: hidden;
+}
+
+
+.rednaoformbuilder .sfInvalidDrop input,.sfInvalidDrop, .sfInvalidDrop label{
+    cursor:no-drop !important;
+}
+
+
+
+.sfcustomtab{
+    cursor: pointer;
+    user-select: none;
+}
+
+.sfTemplateItem .sfImage{
+
+    height: 280px;
+}
+
+.sfTemplateItem:hover{
+    box-shadow: 5px 5px 2px #888888;
+}
+
+.sfTemplateItem h2{
+    margin:0;
+    font-size: 20px;
+}
+
+.sfPreviewButton{
+    position:absolute;
+    top:0;
+    width:100%;
+    background-color: #82b541;
+    color:white;
+    -webkit-border-top-left-radius: 25px;
+    -webkit-border-top-right-radius: 25px;
+    -moz-border-radius-topleft: 25px;
+    -moz-border-radius-topright: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    font-size: 15px;
+    height: 20px;
+    top:-20px;
+    -webkit-transition: top 200ms ease-out;
+    -moz-transition: top 200ms ease-out;
+    -ms-transition: top 200ms ease-out;
+    -o-transition: top 200ms ease-out;
+    transition: top 200ms ease-out;
+    cursor:zoom-in;
+
+}
+
+.sfTemplateItem:hover .sfPreviewButton{
+    top:0;
+}
+
+
+.sfStyleTitle,.sfPropertyTytle{
+    background-color:#f7f7f9;
+    padding:3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e5e5e5;
+}
+
+.sfStyleTitle a,.sfPropertyTytle a{
+    padding-left: 5px;
+    outline: 0 !important;
+    box-shadow: none;
+    text-decoration: none;
+
+}
+
+.sfStyleTitle a.collapsed .sfAccordionIcon,.sfPropertyTytle a.collapsed .sfAccordionIcon{
+    transform:rotate(0deg);
+}
+
+.sfStyleTitle a .sfAccordionIcon,.sfPropertyTytle a .sfAccordionIcon{
+    transform:rotate(90deg);
+}
+
+.sfStyleContainer, .sfPropertyContainer{
+    padding:5px;
+    border-color: #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.sfBorder:focus{
+    background-color:inherit !important;
+
+}
+
+.sfBorder.active:focus{
+    background-color: #e6e6e6 !important;
+}
+
+.sfBorder:active{
+    background-color: #f1f1f1 !important;
+}
+
+.fieldContainerOfFields{
+    border-color:#aaaaaa !important;
+    border-style: dashed !important;;
+    border-width: 2px !important;;
+    min-height: 50px !important;;
+}
+
+.fieldContainerOfFields.fieldEdition{
+    border-color:#940000 !important;
+}
+
+.fieldContainerOfFields{
+    padding:6px;
+    padding-bottom:6px;
+}
+
+#redNaoFormulaTextArea{
+    border-color: #dfdfdf;
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+#redNaoFormulaTextArea:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.sfFormulaElementToShow:focus{
+    outline: none !important;
+}
+
+body{
+    line-height:1.8em;
+}
+
+.CodeMirror.cm-s-default{
+    border-color:#dfdfdf;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.bootstrap-wrapper .CodeMirror{
+    opacity:0;
+}
+
+
+.smartFromsFieldInFormula {
+    background-color: #dfdfdf;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-color: #afafaf;
+    border-style: solid;
+    border-width: 1px;
+    text-overflow: ellipsis;
+    max-width: 10px;
+}
+
+#sfFormulaSearch{
+    width:100%;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    padding-left:26px;
+
+}
+
+.CodeMirror-placeholder{
+    color:#999 !important;
+}
+
+.sfFormulaLabel{
+    font-weight: bold;
+}
+
+.sfFormulaLabel2{
+    font-weight: normal;
+    font-style: italic;
+}
+
+.sfFormulaDescription{
+    display: block;
+    font-size: 12px;
+    color:#909090;
+
+}
+
+.sfFormulaMethod{
+    color:#4D80E6;
+}
+
+.sfFormulaFixedValue{
+    color:#1A4DB3;
+}
+
+#emailControls td{
+    padding-top:5px;
+}
+
+.bootstrap-wrapper #emailTabs {
+    border-bottom: 1px solid #7f7f7f;
+}
+
+.bootstrap-wrapper #emailTabs > li.active > a {
+
+    border: 1px solid #7f7f7f;
+    border-bottom-color: transparent;
+}
+
+#emailTabs a{
+    cursor:pointer;
+    outline:none !important;
+    box-shadow: none !important;
+    -webkit-transition: background-color 400ms ease-out, border-color 400ms ease-out;
+    -moz-transition: background-color 400ms ease-out, border-color 400ms ease-out;
+    -ms-transition: background-color 400ms ease-out, border-color 400ms ease-out;
+    -o-transition: background-color 400ms ease-out, border-color 400ms ease-out;
+    transition: background-color 400ms ease-out, border-color 400ms ease-out;
+
+}
+
+.emailTabItem .sfCloseButton{
+    font-size: 10px;
+}
+
+.sfCloseButton{
+    position: absolute !important;
+    z-index: 1 !important;
+    right: 1px !important;
+    top: 1px !important;
+    color: black !important;
+    cursor: pointer;
+    transition: opacity ease-in-out 0.200s,color ease-in-out 0.200s;
+    opacity: 0;
+}
+
+.sfCloseButton:hover{
+    opacity: 1 !important;
+}
+
+.emailTabItem:hover .sfCloseButton{
+    opacity: .2;
+}
+
+
+
+
+
+.tutorialBox,.tutorialTitle {
+    position: absolute;
+    background: #d51313;
+    border: 2px solid #f5f5f5;
+    max-width:400px;
+    min-height: 40px;
+    font-family: 'Terminal Dosis', sans-serif;
+    padding:5px;
+    color:white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tutorialBox:after, .tutorialBox:before {
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.tutorialBox:after {
+    border-color: rgba(213, 19, 19, 0);
+    border-width: 15px;
+}
+.tutorialBox:before {
+    border-color: rgba(245, 245, 245, 0);
+    border-width: 18px;
+}
+
+/*right*/
+.tutorialBox.BoxRight:after, .tutorialBox.BoxRight:before {
+    right: 100%;
+    top: 50%;
+}
+
+.tutorialBox.BoxRight:after{
+    border-right-color: #d51313;
+    margin-top: -15px;
+}
+
+.tutorialBox.BoxRight:before{
+    margin-top: -18px;
+    border-right-color: #f5f5f5;
+}
+
+/*bottom*/
+.tutorialBox.BoxBottom:after, .tutorialBox.BoxBottom:before {
+    bottom: 100%;
+    left: 50%;
+}
+
+
+.tutorialBox.BoxBottom:after{
+    border-bottom-color: #d51313;
+    margin-left: -15px;
+}
+
+.tutorialBox.BoxBottom:before{
+    border-bottom-color: #f5f5f5;
+    margin-left: -18px;
+}
+
+.bootstrap-wrapper #smartFormsAfterSubmitDiv.table-striped > tbody > tr:nth-child(even) > td,.bootstrap-wrapper #smartFormsAfterSubmitDiv th{
+    background-color: rgb(241, 241, 241);
+}
+
+.bootstrap-wrapper .tooltip-inner {
+  white-space: normal;
+}
+
+.select2-search-field:first-child{
+    width:100%;
+}
+
+.conditionalMode{
+    cursor:pointer;
+    color:#afafaf;
+    transition: color ease-in-out 0.2s;
+}
+
+.conditionalSelected{
+    cursor:pointer;
+    color:#08c;
+}
+
+#formBuilderContainer .component{
+    padding:3px;
+    transition: background-color 200ms ease-in-out;
+}
+
+
+#formBuilderContainer .component:hover{
+    background-color:#e4f1fe;
+}

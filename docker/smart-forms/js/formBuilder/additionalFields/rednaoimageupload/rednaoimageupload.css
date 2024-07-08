@@ -1,0 +1,12 @@
+.rendaoFileContainer .rendaoFileItem:not(:first-child) .rednaoFileContainer
+{
+    margin-top: 5px;
+}
+
+.rednaoFileContainer.highlight{
+    border-color:red !important;
+}
+
+.rednaoimageupload.has-error .rednaoFileContainer{
+    border-color:#a94442 !important;
+}

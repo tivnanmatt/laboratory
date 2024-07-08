@@ -1,0 +1,102 @@
+/*.sfUploadFilePath{
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    color: #666 !important;
+    border: 1px solid #D8D8D8 !important;
+    line-height: 16px !important;
+    background-color: rgb(235, 235, 228) !important;
+    box-sizing: content-box !important;
+}
+
+
+*/
+
+.media-modal{
+z-index: 1000009 !important;
+}
+
+.media-modal-backdrop{
+    z-index: 1000008 !important;
+}
+.sfUploadFileButton{
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    opacity: 0 !important;
+}
+
+
+.sfDeletebutton_invisible{
+    height: 33px  !important;;
+    width: 33px  !important;;
+    display: inline-block  !important;;
+    vertical-align: top  !important;;
+    box-sizing: content-box !important;
+}
+
+.sfDeleteButton_visible{
+    height: 33px  !important;
+    width: 33px  !important;
+    background-color: #c13b3b  !important;
+    display: inline-block  !important;
+    vertical-align: top  !important;
+    background-image: url(../../images/trash.png)  !important;;
+    background-repeat: no-repeat  !important;;
+    background-position: center center  !important;;
+    border-radius: 4px !important;
+    cursor: hand  !important;
+    cursor: pointer  !important;
+    box-sizing: content-box !important;
+}
+.sfDeleteButton_visible:hover{
+    background-color: red  !important;;
+    cursor: hand  !important;;
+    cursor: pointer  !important;;
+}
+
+.sfUploadFilePath
+{
+
+}
+
+.sfUploadFilePath.redNaoInvalid{
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: #ff0000 !important;
+}
+
+.sfUploadFilePathMargin{
+    margin-bottom: 5px;
+}
+
+.sfUploadFileContainer{
+    position: relative !important;
+    overflow: hidden !important;
+    height: 22px !important;
+    color: #fff !important;
+    background-color: #428bca !important;
+    border-color: #357ebd !important;
+    display: table-cell !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: top !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 5px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    box-sizing: content-box !important;
+    width:auto !important;
+}
