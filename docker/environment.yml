@@ -16,4 +16,4 @@ dependencies:
     - scipy 
     - numpy
     - flask 
-    
+    - medmnist
