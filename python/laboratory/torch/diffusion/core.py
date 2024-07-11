@@ -1,10 +1,61 @@
 import torch
-from .sde import StochasticDifferentialEquation
+from ..sde import HomogeneousSDE
 
-class DiffusionModel(torch.nn.Module):
+
+class UnconditionalDiffusionBackbone(torch.nn.Module):
     def __init__(self,
-                 stochastic_differential_equation=None,
-                 neural_network=None,
+                 image_encoder,
+                 time_encoder,
+                 final_estimator):
+        
+        """
+        This is an abstract base class for diffusion backbones.
+
+        It inherits from torch.nn.Module.
+
+        parameters:
+            None
+        """
+
+        assert isinstance(image_encoder, torch.nn.Module)
+        assert isinstance(time_encoder, torch.nn.Module)
+        assert isinstance(final_estimator, torch.nn.Module)
+
+        super(UnconditionalDiffusionBackbone, self).__init__()
+
+        self.image_encoder = image_encoder
+        self.time_encoder = time_encoder
+        self.final_estimator = final_estimator
+
+    def forward(self, x: torch.Tensor, t: torch.Tensor):
+
+        """
+        This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+        parameters:
+            x: torch.Tensor 
+                The input tensor to the linear operator.
+        returns:
+            result: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+                The result of applying the linear operator to the input tensor.
+        """
+        image_embedding = self.image_encoder(x)
+        time_embedding = self.time_encoder(t)
+
+        return self.final_estimator(image_embedding, time_embedding)
+
+
+
+
+
+
+
+
+class UnconditionalDiffusionModel(torch.nn.Module):
+    def __init__(self,
+                 forward_SDE,
+                 diffusion_backbone,
+                 estimator_type='score',
                  batch_size=None,
                  sampler=None,
                  initializer=None,
@@ -22,11 +73,21 @@ class DiffusionModel(torch.nn.Module):
             None
         """
 
-        assert isinstance(stochastic_differential_equation, StochasticDifferentialEquation)
-        assert isinstance(neural_network, torch.nn.Module)
+        assert isinstance(forward_SDE, HomogeneousSDE)
+        assert isinstance(diffusion_backbone, torch.nn.Module)
 
-        super(DiffusionModel, self).__init__()
-    
+        super(UnconditionalDiffusionModel, self).__init__()
+
+        self.diffusion_backbone = diffusion_backbone
+        self.forward_SDE = forward_SDE
+
+        if estimator_type == 'score':
+            self.reverse_SDE = self.forward_SDE.reverse_SDE_given_score_estimator(self.diffusion_backbone)
+        elif estimator_type == 'mean':
+            self.reverse_SDE = self.forward_SDE.reverse_SDE_given_mean_estimator(self.diffusion_backbone)
+
+        self.estimator_type = estimator_type
+
     def forward(self, x_0: torch.Tensor, t: torch.Tensor):
         """
         This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
@@ -55,16 +116,68 @@ class DiffusionModel(torch.nn.Module):
                 The sample at time t.
         """
 
-        return self.stochastic_differential_equation.sample_x_t_given_x_0(x_0, t)
+        return self.forward_SDE.sample_x_t_given_x_0(x_0, t)
     
-    def sample_x_t_plus_dt_given_x_t(self, x_t: torch.Tensor, t: torch.Tensor, dt: torch.Tensor):
-        return self.stochastic_differential_equation.sample_x_t_plus_dt_given_x_t(x_t, t, dt)
+    def forward_sample(self, x, timesteps, sampler='euler', return_all=False):
+        """
+        This method samples from the forward SDE.
+
+        parameters:
+            x: torch.Tensor
+                The initial condition.
+            timesteps: int
+                The number of timesteps to sample.
+            sampler: str
+                The method used to compute the forward update. Currently, only 'euler' and 'heun' are supported.
+        returns:
+            x: torch.Tensor
+                The output tensor.
+        """
+
+        return self.forward_SDE.sample(x, timesteps, sampler, return_all)
+
+    def reverse_sample(self, x, timesteps, sampler='euler', return_all=False, verbose=False):
+        """
+        This method samples from the reverse SDE.
+
+        parameters:
+            x: torch.Tensor
+                The initial condition.
+            timesteps: int
+                The number of timesteps to sample.
+            sampler: str
+                The method used to compute the forward update. Currently, only 'euler' and 'heun' are supported.
+        returns:
+            x: torch.Tensor
+                The output tensor.
+        """
+        return self.reverse_SDE.sample(x, timesteps, sampler, return_all, verbose=verbose)
+    
+    def predict_x_0_given_x_t(self, x_t: torch.Tensor, t: torch.Tensor):
+        """
+        This method predicts x_0 given x_t.
+
+        parameters:
+            x_t: torch.Tensor
+                The sample at time t.
+            t: float
+                The time step.
+        returns:
+            x_0: torch.Tensor
+                The predicted initial condition.
+        """
+
+        if self.estimator_type == 'mean':
+            return self.diffusion_backbone(x_t, t)
+        elif self.estimator_type == 'score':
+            # need to implement Tweedies formula here
+            raise NotImplementedError
     
 
 
 
 
-class UnconditionalScoreBasedDiffusionModel(DiffusionModel):
+class UnconditionalScoreBasedDiffusionModel(UnconditionalDiffusionModel):
     def __init__(self,
                  stochastic_differential_equation,
                  backbone,

@@ -53,6 +53,7 @@ class DenseNet(nn.Module):
         Returns:
             torch.Tensor: Output tensor.
         """
+        
         assert x.shape[-len(self.input_shape):] == self.input_shape, f"Last dimensions of input tensor {x.shape} do not match the input shape {self.input_shape}"
 
         batch_shape = x.shape[:-len(self.input_shape)]
@@ -83,5 +84,7 @@ class DenseNet(nn.Module):
             return nn.Sigmoid()
         elif activation == 'tanh':
             return nn.Tanh()
+        elif activation == 'linear':
+            return nn.Identity()
         else:
             raise ValueError(f"Unsupported activation function: {activation}")

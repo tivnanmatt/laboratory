@@ -295,20 +295,44 @@ class HomogeneousSDE(StochasticDifferentialEquation):
         _f = self.f
         _G = self.G
 
-        def compute_divergence(GG_T, x):
-            # divergence always zero for operators that do not depend on x
-            div = torch.zeros_like(x)
-            return div  
+        # def compute_divergence(GG_T, x):
+        #     # divergence always zero for operators that do not depend on x
+        #     div = torch.zeros_like(x)
+        #     return div  
 
         def _f_star(x, t):
-            G_t = _G(x, t)
+            G_t = _G(t)
             G_tT = G_t.transpose_LinearOperator()
             GG_T = lambda v: G_t(G_tT(v))  # Define GG_T as a function to apply G_t and its transpose
 
-            div_GG_T = compute_divergence(GG_T, x)
-            return _f(x, t) - div_GG_T - GG_T(score_estimator(x, t))
+            return _f(x, t) - GG_T(score_estimator(x, t))
 
-        return StochasticDifferentialEquation(f=_f_star, G=_G)    
+        return StochasticDifferentialEquation(f=_f_star, G=_G) 
+
+    def reverse_SDE_given_mean_estimator(self, mean_estimator):
+        """
+        This method returns the time reversed StochasticDifferentialEquation given a posterior mean estimator.
+
+        The time reversed SDE is given by
+
+        dx = f*(x, t) dt + G(x, t) dw
+
+        where f*(x, t) = f(x, t) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+        parameters:
+            mean_estimator: callable
+                Function that takes x and t as input and returns the estimated mean at time t.
+        returns:
+            sde: StochasticDifferentialEquation
+                The time reversed SDE.
+        """
+
+        def score_estimator(x, t):
+            mu_t = mean_estimator(x, t)
+            sigma_t_inv = self.Sigma(t).inverse_LinearOperator()
+            return sigma_t_inv @ (x - mu_t)
+
+        return self.reverse_SDE_given_score_estimator(score_estimator)   
     
     def mean_response_x_t_given_x_0(self, x0, t):
         """
@@ -345,7 +369,7 @@ class HomogeneousSDE(StochasticDifferentialEquation):
         Sigma_sqrtm = self.Sigma(t).sqrt_LinearOperator()
         return mean_response + Sigma_sqrtm @ noise
 
-    def reverse_SDE_given_posterior_mean_estimator(self, posterior_mean_estimator):
+    def reverse_SDE_given_mean_estimator(self, mean_estimator):
         """
         Constructs the reverse-time stochastic differential equation given a posterior mean estimator.
 
@@ -355,7 +379,7 @@ class HomogeneousSDE(StochasticDifferentialEquation):
         and score_estimator(x, t) = Sigma(t)^(-1) @ (x - mu_t)
 
         Parameters:
-            posterior_mean_estimator: callable
+            mean_estimator: callable
                 Function that takes x and t as input and returns the estimated mean at time t.
         
         Returns:
@@ -364,7 +388,7 @@ class HomogeneousSDE(StochasticDifferentialEquation):
         """
         
         def score_estimator(x, t):
-            mu_t = posterior_mean_estimator(x, t)
+            mu_t = mean_estimator(x, t)
             sigma_t_inv = self.Sigma(t).inverse_LinearOperator()
             return sigma_t_inv @ (x - mu_t)
 

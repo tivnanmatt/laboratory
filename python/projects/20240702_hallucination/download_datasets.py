@@ -17,16 +17,16 @@ for data_flag in ['pathmnist', 'chestmnist', 'dermamnist', 'octmnist', 'pneumoni
     DataClass = getattr(medmnist, info['python_class'])
 
     # Download and save train dataset
-    train_dataset = DataClass(split='train', download=True)
+    train_dataset = DataClass(split='train', download=True, root='medmnist_data')
     save_dataset(train_dataset, 'train')
 
     # Download and save test dataset
-    test_dataset = DataClass(split='test', download=True)
+    test_dataset = DataClass(split='test', download=True, root='medmnist_data')
     save_dataset(test_dataset, 'test')
 
     # Download and save validation dataset if available
     if info['task'] == 'multi-class':
-        val_dataset = DataClass(split='val', download=True)
+        val_dataset = DataClass(split='val', download=True, root='medmnist_data')
         save_dataset(val_dataset, 'val')
 
 print("Datasets downloaded and saved successfully.")

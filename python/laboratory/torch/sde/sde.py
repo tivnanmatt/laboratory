@@ -26,6 +26,8 @@ class StochasticDifferentialEquation(nn.Module):
                 The diffusion term of the SDE. It should take x and t as input and return a rtl.linalg.LinearOperator that can act on a tensor of the same shape as x.
         """
 
+        super(StochasticDifferentialEquation, self).__init__()
+
         self.f = f
         self.G = G
 
@@ -77,7 +79,7 @@ class StochasticDifferentialEquation(nn.Module):
 
         return StochasticDifferentialEquation(f=_f_star, G=_G)
 
-    def sample(self, x, timesteps, sampler='euler', return_all=False):
+    def sample(self, x, timesteps, sampler='euler', return_all=False, verbose=False):
         """
         This method samples from the SDE.
 
@@ -94,15 +96,19 @@ class StochasticDifferentialEquation(nn.Module):
         """
 
         x = x
-        t = timesteps[0]
+        # t = timesteps[0]
+        t = torch.tensor(timesteps[0]).reshape(1,1).repeat(x.shape[0], 1)
 
         if return_all:
             x_all = [x]
         
         for i in range(1, len(timesteps)):
+            if verbose:
+                print(f"Sampling step {i}/{len(timesteps)}")
+            last_step = i == len(timesteps) - 1
             dt = timesteps[i] - t
-            x = self._sample_step(x, t, dt, sampler=sampler)
-            t = timesteps[i]
+            x = self._sample_step(x, t, dt, sampler=sampler, last_step=last_step)
+            t = torch.tensor(timesteps[i]).reshape(1,1).repeat(x.shape[0], 1)
 
             if return_all:
                 x_all.append(x)
@@ -112,7 +118,7 @@ class StochasticDifferentialEquation(nn.Module):
         
         return x
 
-    def _sample_step(self, x, t, dt, sampler='euler'):
+    def _sample_step(self, x, t, dt, sampler='euler', last_step=False):
         """
         This method computes the forward update of the SDE.
 
@@ -135,13 +141,13 @@ class StochasticDifferentialEquation(nn.Module):
         """
 
         if sampler == 'euler':
-            return self._sample_step_euler(x, t, dt)
+            return self._sample_step_euler(x, t, dt, last_step=last_step)
         elif sampler == 'heun':
-            return self._sample_step_heun(x, t, dt)
+            return self._sample_step_heun(x, t, dt, last_step=last_step)
         else:
             raise ValueError("The sampler should be one of ['euler', 'heun'].")
 
-    def _sample_step_euler(self, x, t, dt):
+    def _sample_step_euler(self, x, t, dt, last_step=False):
         """
         This method computes the forward update of the SDE using the Euler-Maruyama method.
 
@@ -178,9 +184,12 @@ class StochasticDifferentialEquation(nn.Module):
         _f_dt = _f * dt
         _G_dw = _G @ dw
 
-        return x + _f_dt + _G_dw
+        if last_step:
+            return x + _f_dt
+        else:
+            return x + _f_dt + _G_dw
 
-    def _sample_step_heun(self, x, t, dt):
+    def _sample_step_heun(self, x, t, dt, last_step=False):
         """
         This method computes the forward update of the SDE using the Heun's method.
 
@@ -217,7 +226,11 @@ class StochasticDifferentialEquation(nn.Module):
         f_avg = (f_t + f_t_corrector) / 2
         G_dw_avg = (G_t @ dw + G_t_corrector @ dw) / 2
 
-        return x + f_avg * dt + G_dw_avg
+
+        if last_step:
+            return x + f_avg * dt
+        else:
+            return x + f_avg * dt + G_dw_avg
     
 
 
@@ -308,7 +321,32 @@ class HomogeneousSDE(StochasticDifferentialEquation):
             div_GG_T = compute_divergence(GG_T, x)
             return _f(x, t) - div_GG_T - GG_T(score_estimator(x, t))
 
-        return StochasticDifferentialEquation(f=_f_star, G=_G)    
+        return StochasticDifferentialEquation(f=_f_star, G=_G)
+    
+    def reverse_SDE_given_mean_estimator(self, mean_estimator):
+        """
+        This method returns the time reversed StochasticDifferentialEquation given a mean function estimator.
+
+        The time reversed SDE is given by
+
+        dx = f*(x, t) dt + G(x, t) dw
+
+        where f*(x, t) = f(x, t) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+        parameters:
+            mean_estimator: callable
+                The mean estimator function that takes x, t, as input and returns the mean function estimate.
+        returns:
+            sde: StochasticDifferentialEquation
+                The time reversed SDE.
+        """
+        
+        def score_estimator(x, t):
+            mu_t = mean_estimator(x, t)
+            sigma_t_inv = self.Sigma(t).inverse_LinearOperator()
+            return sigma_t_inv @ (mu_t-x)
+
+        return self.reverse_SDE_given_score_estimator(score_estimator)
     
     def mean_response_x_t_given_x_0(self, x0, t):
         """

@@ -210,9 +210,9 @@ class LinearOperator(torch.nn.Module):
     def mat_sub(self, M):
         raise NotImplementedError
     def mat_mul(self, M):
-        raise NotImplementedError
+        return self.forward(M)
     def __mul__(self, x):
-        return self.forward(x)
+        return NotImplementedError
     def __add__(self, M):
         return self.mat_add(M)
     def __sub__(self, M):
@@ -445,6 +445,10 @@ class ScalarLinearOperator(SymmetricLinearOperator, InvertibleLinearOperator):
         """
 
         super(ScalarLinearOperator, self).__init__()
+
+        # if scalar is a float, convert it to a tensor
+        if isinstance(scalar, (int, float)):
+            scalar = torch.tensor(scalar)
 
         self.scalar = scalar
 

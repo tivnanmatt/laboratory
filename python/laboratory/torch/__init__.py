@@ -5,5 +5,6 @@ from . import distributions
 from . import linalg
 from . import networks
 from . import samplers
+from . import datasets
 from . import sde
 from . import tasks
