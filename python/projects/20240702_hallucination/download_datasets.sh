@@ -5,7 +5,7 @@ if conda env list | grep -q 'medmnist'; then
   echo "The conda environment 'medmnist' already exists. Skipping environment creation."
 else
   # Create the conda environment from the environment_medmnist.yml file
-  conda env create --name medmnist --file environment_medmnist.yml
+  conda env create --name medmnist --file medmnist_environment.yml
 fi
 
 # Initialize conda in the current shell session
