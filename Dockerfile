@@ -1,60 +1,39 @@
-# Use the official NVIDIA CUDA image with Conda pre-installed as a base
+# Use the official NVIDIA CUDA image with Ubuntu as a base
 FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
 
 # Set DEBIAN_FRONTEND to noninteractive to avoid prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install necessary system packages
+# Install necessary system packages including Python 3.10 and pip
 RUN apt-get update && apt-get install -y wget git libgl1-mesa-glx gnupg software-properties-common ffmpeg \
-    nginx mariadb-server php-fpm php-mysql unzip
+    python3.10 python3.10-venv python3.10-dev python3-pip
 
-# Download and install Miniconda
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
-    bash miniconda.sh -b -p /miniconda && \
-    rm miniconda.sh
+# Set python3.10 as the default python
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 && \
+    update-alternatives --install /usr/bin/pip3 pip3 /usr/bin/pip3.10 1
 
-# Set the path to include the Conda bin directory
-ENV PATH /miniconda/bin:$PATH
+# Create a virtual environment named "laboratory"
+RUN python3 -m venv /venv/laboratory
 
-# Initialize Conda in bash (not necessary for activation, but can be useful for other purposes)
-RUN conda init bash
-
-# Initialize the conda environment
-COPY environment.yml /environment.yml
-RUN conda env create --name "laboratory" -f environment.yml
-
-# Activate the conda environment for interactive shell sessions
-SHELL ["conda", "run", "-n", "laboratory", "/bin/bash", "-c"]
-
-# Install LEAP: a GPU-compatible CT forward projector
-WORKDIR /opt
-RUN git clone https://github.com/LLNL/LEAP.git
-WORKDIR /opt/LEAP
-RUN pip install -v .
-WORKDIR /
+# Activate the virtual environment and install necessary Python packages
+RUN /venv/laboratory/bin/pip install --upgrade pip && \
+    /venv/laboratory/bin/pip install torch torchvision torchaudio pyyaml matplotlib scipy numpy cmake>=3.23 ffmpeg
 
 # Copy the laboratory directory to the container
 WORKDIR /opt
 RUN git clone https://github.com/tivnanmatt/laboratory.git
 WORKDIR /opt/laboratory/python/
-RUN pip install -v .
+RUN /venv/laboratory/bin/pip install -v .
 WORKDIR /home
 
-# Copy WordPress and Nginx configuration files
-COPY ./wordpress /var/www/html
-COPY ./nginx/wordpress /etc/nginx/sites-available/wordpress
-COPY ./init.sql /docker-entrypoint-initdb.d/
-COPY ./startup.sh /opt/startup.sh
+# Copy the startup script
+COPY startup.sh /usr/local/bin/startup.sh
 
-# Set permissions for WordPress files
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html
+# Ensure the startup script is executable
+RUN chmod +x /usr/local/bin/startup.sh
 
-# Enable the Nginx site configuration
-RUN ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
-
-# Expose port 80 for Nginx
-EXPOSE 80
+# Set the path to include the virtual environment bin directory
+ENV PATH=/venv/laboratory/bin:$PATH
 
 # Run the startup script
-CMD ["/bin/bash", "/opt/startup.sh"]
+CMD ["/bin/bash", "/usr/local/bin/startup.sh"]
