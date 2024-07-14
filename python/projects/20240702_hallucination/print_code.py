@@ -8,6 +8,10 @@ def print_file_contents(file_path):
 
 def list_files_and_print_contents(root_dir='.'):
     for dirpath, dirnames, filenames in os.walk(root_dir):
+        # Skip the ./medmnist_env directory and its subdirectories
+        if 'medmnist_env' in dirpath:
+            continue
+        
         print(f"Directory: {dirpath}")
         for filename in filenames:
             file_path = os.path.join(dirpath, filename)
