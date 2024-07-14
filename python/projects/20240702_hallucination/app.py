@@ -91,6 +91,9 @@ def update_images(dataset, measurement, reconstruction, enable_dataset, enable_m
     if enable_dataset and not enable_measurement:
         enable_reconstruction = False
 
+    if enable_reconstruction and measurements_global is None:
+        enable_measurement = True
+
     if enable_dataset:
         measurements_global = None
         reconstructions_global = None
