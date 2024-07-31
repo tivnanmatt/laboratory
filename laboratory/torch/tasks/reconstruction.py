@@ -58,6 +58,52 @@ class ImageReconstructionTask(nn.Module):
         measurements = self.measurement_simulator(true_images)
         reconstructions = self.image_reconstructor(measurements)
         return reconstructions
+    
+    def sample_evaluation_dataset(self, 
+                                  *args,
+                                  num_images=1, 
+                                  num_measurements_per_image=1, 
+                                  num_reconstructions_per_measurement=1, 
+                                  **kwargs):
+        
+        assert num_images > 0
+        assert num_measurements_per_image > 0
+        assert num_reconstructions_per_measurement > 0
+        
+        for iImage in range(num_images):
+
+            tmp = self.sample_images(*args, **kwargs)
+
+            if iImage == 0:
+                true_images = torch.zeros((num_images, 1, 1, *tmp[0].shape), dtype=tmp[0].dtype, device=tmp[0].device)
+            
+            true_images[iImage,0,0] = tmp[0]
+
+            for iMeasurement in range(num_measurements_per_image):
+
+                tmp = self.sample_measurements_given_images(true_images[iImage,0,0])
+
+                if iImage == 0 and iMeasurement == 0:
+                    measurements = torch.zeros((num_images, num_measurements_per_image, 1, *tmp.shape), dtype=tmp.dtype, device=tmp.device)
+
+                measurements[iImage, iMeasurement,0] = tmp
+
+                for iReconstruction in range(num_reconstructions_per_measurement):
+
+                    tmp = self.sample_reconstructions_given_measurements(measurements[iImage, iMeasurement,0].unsqueeze(0))[0]
+                    if iImage == 0 and iMeasurement == 0 and iReconstruction == 0:
+                        # the problem with this version is some reconstructors require a batch size dimension
+                        # tmp = self.sample_reconstructions_given_measurements(measurements[iImage, iMeasurement,0])
+
+                        # so for now we are using unsqueeze(0) to add a batch size dimension and then removing it
+                        
+                        reconstructions = torch.zeros((num_images, num_measurements_per_image, num_reconstructions_per_measurement, *tmp.shape), dtype=tmp.dtype, device=tmp.device)
+                    
+                    reconstructions[iImage, iMeasurement, iReconstruction] = tmp[0]
+        
+        return true_images, measurements, reconstructions
+
+
 
     def sample(self, *args, **kwargs):
         true_images = self.image_dataset(*args, **kwargs)
@@ -84,7 +130,8 @@ class ImageReconstructionTask(nn.Module):
             if verbose:
                 print(f"Epoch {epoch}: Loss: {loss.item()}")
         
-        return 
+        return
+    
 
 
 
@@ -117,7 +164,7 @@ class DiffusionBridgeImageReconstructor(nn.Module):
 
                 if timesteps is None:
                     if num_timesteps is None:
-                        num_timesteps = 128
+                        num_timesteps = 1
                     timesteps = torch.linspace(1, 0, num_timesteps+1).to(x_1.device)
               
                 assert isinstance(timesteps, torch.Tensor)
@@ -147,34 +194,58 @@ class DiffusionBridgeModel(ImageReconstructionTask):
                                                     image_reconstructor, 
                                                     task_evaluator=task_evaluator)
         
-    def train_diffusion_backbone(self, *args, num_epochs=100, num_iterations=100, optimizer=None, verbose=True, time_sampler=None,**kwargs):
+    def train_diffusion_backbone(self, 
+                                 *args, 
+                                 num_epochs=100, 
+                                 num_iterations_per_epoch=100, 
+                                 num_epochs_per_save=None, 
+                                 weights_filename=None,
+                                 optimizer=None, 
+                                 verbose=True, 
+                                 time_sampler=None,
+                                 **kwargs):
                 
         assert isinstance(self.image_reconstructor, DiffusionBridgeImageReconstructor)
 
         if optimizer is None:
             optimizer = torch.optim.Adam(self.image_reconstructor.diffusion_model.diffusion_backbone.parameters(), lr=1e-3)
 
-
         if time_sampler is None:
             assert isinstance(self.image_reconstructor.diffusion_model.diffusion_backbone, torch.nn.Module)
             time_sampler = lambda x_shape: torch.rand(x_shape)
 
+        if num_epochs_per_save is not None:
+            assert weights_filename is not None
+            assert isinstance(weights_filename, str)
+
+        train_loss = torch.zeros(num_epochs, dtype=torch.float32)
+
         for epoch in range(num_epochs):
-            for iteration in range(num_iterations):
+            loss_sum = 0
+            for iteration in range(num_iterations_per_epoch):
                 optimizer.zero_grad()
-                true_images = self.sample_images(*args, **kwargs)
-                batch_size = true_images.shape[0]
-                measurements = self.sample_measurements_given_images(true_images)
-                t = time_sampler((batch_size, 1)).to(true_images.device)
-                x_0 = self.image_reconstructor.initial_reconstructor(measurements)
+                x_0 = self.sample_images(*args, **kwargs)
+                batch_size = x_0.shape[0]
+                t = time_sampler((batch_size, 1)).to(x_0.device)
                 x_t = self.image_reconstructor.diffusion_model.sample_x_t_given_x_0(x_0, t)
                 x_0_pred = self.image_reconstructor.diffusion_model.predict_x_0_given_x_t(x_t, t)
-                reconstructions = self.image_reconstructor.final_reconstructor(x_0_pred)
-                loss = self.task_evaluator(true_images, reconstructions)
+                loss = self.task_evaluator(x_0, x_0_pred)
                 loss.backward()
                 optimizer.step()
+                loss_sum += loss.item()
+
+            if num_epochs_per_save is not None and epoch % num_epochs_per_save == 0:
+                torch.save(self.image_reconstructor.diffusion_model.diffusion_backbone.state_dict(), weights_filename)
+
+            
+            train_loss[epoch] = loss_sum/num_iterations_per_epoch
+            
             if verbose:
-                print(f"Epoch {epoch}: Loss: {loss.item()}")
-        
-        return 
+                print(f"Epoch {epoch}: Loss: {train_loss[epoch].item()}")
+
+        return train_loss
+    
+
+
+
 
