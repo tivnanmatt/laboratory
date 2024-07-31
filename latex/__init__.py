@@ -1,1 +1,0 @@
-# /laboratory/latex/__init__.py: Initializes the latex submodule
