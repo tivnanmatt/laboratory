@@ -2,16 +2,23 @@ name: laboratory
 channels:
   - conda-forge
   - defaults
+  - nvidia/label/cuda-12.4.1
 dependencies:
-  - python=3.10
+  - python=3.11
+  - pip
   - cmake>=3.23
   - ffmpeg
-  - pip
+  - cuda-toolkit=12.4.1
+  - pyyaml
+  - matplotlib
+  - scipy 
+  - numpy
   - pip:
-    - torch
-    - torchvision
-    - torchaudio
     - pyyaml
     - matplotlib
     - scipy 
-    - numpy
+    - numpy==1.25
+    - torch
+    - torchvision
+    - torchaudio
+    - --index-url https://download.pytorch.org/whl/cu124

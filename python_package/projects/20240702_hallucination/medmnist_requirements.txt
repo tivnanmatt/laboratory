@@ -1,7 +1,0 @@
-medmnist
-torch
-torchvision
-numpy
-pandas
-scikit-learn
-pillow
