@@ -39,8 +39,8 @@ class ImageReconstructionTask(nn.Module):
         measurements = self.measurement_simulator(true_images)
         return measurements
     
-    def sample_reconstructions_given_measurements(self, measurements):
-        reconstructions = self.image_reconstructor(measurements)
+    def sample_reconstructions_given_measurements(self, measurements, **kwargs):
+        reconstructions = self.image_reconstructor(measurements, **kwargs)
         return reconstructions
     
     def sample_measurements(self, *args, **kwargs):
@@ -69,37 +69,25 @@ class ImageReconstructionTask(nn.Module):
         assert num_images > 0
         assert num_measurements_per_image > 0
         assert num_reconstructions_per_measurement > 0
+
+        true_image, measurements, reconstructions = self.sample_reconstructions(*args, **kwargs)
+        
+        image_shape = true_image[0].shape
+        measurement_shape = measurements[0].shape
+        reconstruction_shape = reconstructions[0].shape
+
+        true_images = torch.zeros((num_images, 1, 1, *image_shape), dtype=true_image.dtype, device=true_image.device)
+        measurements = torch.zeros((num_images, num_measurements_per_image, 1, *measurement_shape), dtype=measurements.dtype, device=measurements.device)
+        reconstructions = torch.zeros((num_images, num_measurements_per_image, num_reconstructions_per_measurement, *reconstruction_shape), dtype=reconstructions.dtype, device=reconstructions.device)
         
         for iImage in range(num_images):
-
-            tmp = self.sample_images(*args, **kwargs)
-
-            if iImage == 0:
-                true_images = torch.zeros((num_images, 1, 1, *tmp[0].shape), dtype=tmp[0].dtype, device=tmp[0].device)
-            
-            true_images[iImage,0,0] = tmp[0]
+            true_images[iImage,0,0] = self.sample_images(*args, **kwargs)
 
             for iMeasurement in range(num_measurements_per_image):
+                measurements[iImage, iMeasurement,0] = self.sample_measurements_given_images(true_images[iImage,0,0])
 
-                tmp = self.sample_measurements_given_images(true_images[iImage,0,0])
-
-                if iImage == 0 and iMeasurement == 0:
-                    measurements = torch.zeros((num_images, num_measurements_per_image, 1, *tmp.shape), dtype=tmp.dtype, device=tmp.device)
-
-                measurements[iImage, iMeasurement,0] = tmp
-
-                for iReconstruction in range(num_reconstructions_per_measurement):
-
-                    tmp = self.sample_reconstructions_given_measurements(measurements[iImage, iMeasurement,0].unsqueeze(0))[0]
-                    if iImage == 0 and iMeasurement == 0 and iReconstruction == 0:
-                        # the problem with this version is some reconstructors require a batch size dimension
-                        # tmp = self.sample_reconstructions_given_measurements(measurements[iImage, iMeasurement,0])
-
-                        # so for now we are using unsqueeze(0) to add a batch size dimension and then removing it
-                        
-                        reconstructions = torch.zeros((num_images, num_measurements_per_image, num_reconstructions_per_measurement, *tmp.shape), dtype=tmp.dtype, device=tmp.device)
-                    
-                    reconstructions[iImage, iMeasurement, iReconstruction] = tmp[0]
+                for iReconstruction in range(num_reconstructions_per_measurement):                    
+                    reconstructions[iImage, iMeasurement, iReconstruction] = self.sample_reconstructions_given_measurements(measurements[iImage, iMeasurement,0].unsqueeze(0))[0][0]
         
         return true_images, measurements, reconstructions
 
@@ -142,8 +130,6 @@ class ImageReconstructionTask(nn.Module):
 
 from ..diffusion import UnconditionalDiffusionModel
 
-
-
 class DiffusionBridgeImageReconstructor(nn.Module):
             def __init__(self, initial_reconstructor, diffusion_model, final_reconstructor):
                 super(DiffusionBridgeImageReconstructor, self).__init__()
@@ -164,7 +150,7 @@ class DiffusionBridgeImageReconstructor(nn.Module):
 
                 if timesteps is None:
                     if num_timesteps is None:
-                        num_timesteps = 1
+                        num_timesteps = 32
                     timesteps = torch.linspace(1, 0, num_timesteps+1).to(x_1.device)
               
                 assert isinstance(timesteps, torch.Tensor)

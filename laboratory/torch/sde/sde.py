@@ -86,8 +86,8 @@ class StochasticDifferentialEquation(nn.Module):
         parameters:
             x: torch.Tensor
                 The initial condition.
-            timesteps: int
-                The number of timesteps to sample.
+            timesteps: torch.Tensor
+                The time steps at which the SDE is evaluated.
             sampler: str
                 The method used to compute the forward update. Currently, only 'euler' and 'heun' are supported.
         returns:
@@ -97,7 +97,12 @@ class StochasticDifferentialEquation(nn.Module):
 
         x = x
         # t = timesteps[0]
-        t = torch.tensor(timesteps[0]).reshape(1,1).repeat(x.shape[0], 1)
+
+        # if timesteps is not a tensor, make it a tensor
+        if not isinstance(timesteps, torch.Tensor):
+            timesteps = torch.tensor(timesteps)
+    
+        t = timesteps[0].reshape(1,1).repeat(x.shape[0], 1)
 
         if return_all:
             x_all = [x]
@@ -108,7 +113,7 @@ class StochasticDifferentialEquation(nn.Module):
             last_step = i == len(timesteps) - 1
             dt = timesteps[i] - t
             x = self._sample_step(x, t, dt, sampler=sampler, last_step=last_step)
-            t = torch.tensor(timesteps[i]).reshape(1,1).repeat(x.shape[0], 1)
+            t = timesteps[i].reshape(1,1).repeat(x.shape[0], 1)
 
             if return_all:
                 x_all.append(x)
