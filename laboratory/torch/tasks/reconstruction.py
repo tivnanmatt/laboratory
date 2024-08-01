@@ -213,8 +213,8 @@ class DiffusionBridgeModel(ImageReconstructionTask):
                 x_0 = self.sample_images(*args, **kwargs)
                 batch_size = x_0.shape[0]
                 t = time_sampler((batch_size, 1)).to(x_0.device)
-                x_t = self.image_reconstructor.diffusion_model.sample_x_t_given_x_0(x_0, t)
-                x_0_pred = self.image_reconstructor.diffusion_model.predict_x_0_given_x_t(x_t, t)
+                x_t = self.image_reconstructor.diffusion_model.sample_x_t_given_x_0(x_0, t) # forward process
+                x_0_pred = self.image_reconstructor.diffusion_model.predict_x_0_given_x_t(x_t, t) # reverse prediction
                 loss = self.task_evaluator(x_0, x_0_pred)
                 loss.backward()
                 optimizer.step()
