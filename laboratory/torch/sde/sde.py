@@ -109,7 +109,7 @@ class StochasticDifferentialEquation(nn.Module):
         
         for i in range(1, len(timesteps)):
             if verbose:
-                print(f"Sampling step {i}/{len(timesteps)}")
+                print(f"Sampling step {i}/{len(timesteps)-1}")
             last_step = i == len(timesteps) - 1
             dt = timesteps[i] - t
             x = self._sample_step(x, t, dt, sampler=sampler, last_step=last_step)

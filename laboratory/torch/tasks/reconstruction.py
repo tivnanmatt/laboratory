@@ -194,7 +194,7 @@ class DiffusionBridgeModel(ImageReconstructionTask):
         assert isinstance(self.image_reconstructor, DiffusionBridgeImageReconstructor)
 
         if optimizer is None:
-            optimizer = torch.optim.Adam(self.image_reconstructor.diffusion_model.diffusion_backbone.parameters(), lr=1e-3)
+            optimizer = torch.optim.Adam(self.image_reconstructor.diffusion_model.diffusion_backbone.parameters(), lr=5e-4)
 
         if time_sampler is None:
             assert isinstance(self.image_reconstructor.diffusion_model.diffusion_backbone, torch.nn.Module)
