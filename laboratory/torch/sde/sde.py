@@ -352,6 +352,41 @@ class HomogeneousSDE(StochasticDifferentialEquation):
             return sigma_t_inv @ (mu_t-x)
 
         return self.reverse_SDE_given_score_estimator(score_estimator)
+
+
+
+
+    def reverse_SDE_given_noise_estimator(self, noise_estimator):
+        """
+        This method returns the time reversed StochasticDifferentialEquation given a noise function estimator.
+
+        The time reversed SDE is given by
+
+        dx = f*(x, t) dt + G(x, t) dw
+
+        where f*(x, t) = f(x, t) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+        parameters:
+            noise_estimator: callable
+                The noise estimator function that takes x, t, as input and returns the noise function estimate.
+        returns:
+            sde: StochasticDifferentialEquation
+                The time reversed SDE.
+        """
+
+        # score = Sigma(t)^(-1) @ (x - mu_t)
+        # x = mu_t + Sigma(t)^(1/2) @ noise
+        # noise = Sigma(t)^(-1/2) @ (x - mu_t)
+        # score = Sigma(t)^(-1) @ (mu_t + Sigma(t)^(1/2) @ noise - mu_t)
+        # score = Sigma(t)^(-1) @ Sigma(t)^(1/2) @ noise
+        # score = Sigma(t)^(-1/2) @ noise
+        
+        def score_estimator(x, t):
+            noise_t = noise_estimator(x, t)
+            sigma_t_sqrt_inv = self.Sigma(t).sqrt_LinearOperator().inverse_LinearOperator()
+            return -1.0*(sigma_t_sqrt_inv @ noise_t)
+
+        return self.reverse_SDE_given_score_estimator(score_estimator)
     
     def mean_response_x_t_given_x_0(self, x0, t):
         """
@@ -383,10 +418,29 @@ class HomogeneousSDE(StochasticDifferentialEquation):
             torch.Tensor
                 The sampled response at time t.
         """
-        mean_response = self.mean_response_x_t_given_x_0(x0, t)
         noise = torch.randn_like(x0)
+        return self.sample_x_t_given_x_0_and_noise(x0, noise, t)
+
+        
+    
+
+    def sample_x_t_given_x_0_and_noise(self, x0, noise, t):
+        """
+        Samples x_t given x_0 using the mean response and adding Gaussian noise with covariance Sigma(t).
+
+        Parameters:
+            x0: torch.Tensor
+                The initial condition.
+            t: float
+                The time at which the sample is evaluated.
+        
+        Returns:
+            torch.Tensor
+                The sampled response at time t.
+        """
+        mean_response = self.mean_response_x_t_given_x_0(x0, t)
         Sigma_sqrtm = self.Sigma(t).sqrt_LinearOperator()
-        return mean_response + Sigma_sqrtm @ noise
+        return mean_response + Sigma_sqrtm @ noise 
 
     def reverse_SDE_given_posterior_mean_estimator(self, posterior_mean_estimator):
         """

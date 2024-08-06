@@ -2,6 +2,9 @@
 import torch
 from torch import nn
 
+from torch_ema import ExponentialMovingAverage
+
+
 class ImageReconstructionTask(nn.Module):
     def __init__(self, 
                  image_dataset,
@@ -189,13 +192,17 @@ class DiffusionBridgeModel(ImageReconstructionTask):
                                  optimizer=None, 
                                  verbose=True, 
                                  time_sampler=None,
+                                 ema=False,
                                  **kwargs):
                 
         assert isinstance(self.image_reconstructor, DiffusionBridgeImageReconstructor)
 
         if optimizer is None:
-            optimizer = torch.optim.Adam(self.image_reconstructor.diffusion_model.diffusion_backbone.parameters(), lr=5e-4)
+            optimizer = torch.optim.Adam(self.image_reconstructor.diffusion_model.diffusion_backbone.parameters(), lr=1e-3)
 
+        if ema:
+            ema =  ExponentialMovingAverage(self.image_reconstructor.diffusion_model.diffusion_backbone.parameters(), decay=0.995)
+        
         if time_sampler is None:
             assert isinstance(self.image_reconstructor.diffusion_model.diffusion_backbone, torch.nn.Module)
             time_sampler = lambda x_shape: torch.rand(x_shape)
@@ -213,12 +220,26 @@ class DiffusionBridgeModel(ImageReconstructionTask):
                 x_0 = self.sample_images(*args, **kwargs)
                 batch_size = x_0.shape[0]
                 t = time_sampler((batch_size, 1)).to(x_0.device)
-                x_t = self.image_reconstructor.diffusion_model.sample_x_t_given_x_0(x_0, t) # forward process
-                x_0_pred = self.image_reconstructor.diffusion_model.predict_x_0_given_x_t(x_t, t) # reverse prediction
-                loss = self.task_evaluator(x_0, x_0_pred)
+                noise = torch.randn_like(x_0)
+                x_t = self.image_reconstructor.diffusion_model.sample_x_t_given_x_0_and_noise(x_0, noise, t) # forward process
+                
+                
+                # x_0_pred = self.image_reconstructor.diffusion_model.predict_x_0_given_x_t(x_t, t) # reverse prediction
+                # loss = torch.mean((x_0_pred - x_0)**2.0)
+
+                noise_pred = self.image_reconstructor.diffusion_model.predict_noise_given_x_t(x_t, t) # reverse prediction
+                loss = torch.mean((noise_pred - noise)**2.0)
+
+                soft_tissue_mask = x_0 < 1.5
+                loss += 9.0*torch.mean((noise_pred[soft_tissue_mask] - noise[soft_tissue_mask])**2.0)
+
+
                 loss.backward()
                 optimizer.step()
                 loss_sum += loss.item()
+
+                if ema:
+                    ema.update()
 
             if num_epochs_per_save is not None and epoch % num_epochs_per_save == 0:
                 torch.save(self.image_reconstructor.diffusion_model.diffusion_backbone.state_dict(), weights_filename)

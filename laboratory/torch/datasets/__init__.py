@@ -64,13 +64,26 @@ class TCGA(Sampler):
     def __init__(self, 
                  root, 
                  train=True,
-                 device='cpu'):
+                 device='cpu',
+                 num_files=1,
+                 verbose=False):
         # Load in the data
         if train:
-            for i in range(8):
-                self.images = torch.load(root + f'/TCGA_LIHC_00000{i}.pt')
+            image_list = []
+            for i in range(num_files):
+                if verbose:
+                    print(f'Loading {root}/training/training_TCGA_LIHC_{str(i).zfill(6)}.pt')
+
+                image_list.append(torch.load(root + f'/training/training_TCGA_LIHC_' + str(i).zfill(6) + '.pt'))
+            self.images = torch.cat(image_list)
+
         else:
-            self.images = torch.load(root + '/evaluation_TCGA_LIHC_000000.pt')
+            image_list = []
+            for i in range(num_files):
+                if verbose:
+                    print(f'Loading {root}/testing/testingTCGA_LIHC_{str(i).zfill(6)}.pt')
+                image_list.append(torch.load(root + f'/testing/testing_TCGA_LIHC_' + str(i).zfill(6) + '.pt'))
+            self.images = torch.cat(image_list)
 
         # Add an extra dimension for channels on axis 1
         self.images = torch.unsqueeze(self.images, 1)
@@ -83,8 +96,8 @@ class TCGA(Sampler):
         self.sigma = self.images.std()
         self.images = (self.images - self.mu) / self.sigma
 
-        # Move to device
-        self.to(device)
+        # define the device for output images
+        self.device = device
 
         super(TCGA, self).__init__()
 
@@ -93,12 +106,12 @@ class TCGA(Sampler):
     
     # remove the parts that have labels
     def __getitem__(self, idx):
-        return self.images[idx]
+        return self.images[idx].to(self.device)
     
     def sample(self, batch_size=1):
         indices = torch.randint(0, len(self.images), (batch_size,))
-        return self.images[indices]
+        return self.images[indices].to(self.device)
 
     def to(self, device):
-        self.images = self.images.to(device)
+        self.device = device
         return self

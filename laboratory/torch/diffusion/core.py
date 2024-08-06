@@ -85,6 +85,8 @@ class UnconditionalDiffusionModel(torch.nn.Module):
             self.reverse_SDE = self.forward_SDE.reverse_SDE_given_score_estimator(self.diffusion_backbone)
         elif estimator_type == 'mean':
             self.reverse_SDE = self.forward_SDE.reverse_SDE_given_mean_estimator(self.diffusion_backbone)
+        elif estimator_type == 'noise':
+            self.reverse_SDE = self.forward_SDE.reverse_SDE_given_noise_estimator(self.diffusion_backbone)
 
         self.estimator_type = estimator_type
 
@@ -115,9 +117,26 @@ class UnconditionalDiffusionModel(torch.nn.Module):
             x_t: torch.Tensor
                 The sample at time t.
         """
-
         return self.forward_SDE.sample_x_t_given_x_0(x_0, t)
     
+
+    def sample_x_t_given_x_0_and_noise(self, x_0: torch.Tensor, noise: torch.Tensor, t: torch.Tensor):
+        """
+        This method samples x_t given x_0 and noise.
+
+        parameters:
+            x_0: torch.Tensor 
+                The initial condition.
+            noise: torch.Tensor
+                The noise.
+            t: float
+                The time step.
+        returns:
+            x_t: torch.Tensor
+                The sample at time t.
+        """
+        return self.forward_SDE.sample_x_t_given_x_0_and_noise(x_0, noise, t)
+
     def forward_sample(self, x, timesteps, sampler='euler', return_all=False):
         """
         This method samples from the forward SDE.
@@ -172,6 +191,29 @@ class UnconditionalDiffusionModel(torch.nn.Module):
         elif self.estimator_type == 'score':
             # need to implement Tweedies formula here
             raise NotImplementedError
+        elif self.estimator_type == 'noise':
+            raise NotImplementedError
+        
+    def predict_noise_given_x_t(self, x_t: torch.Tensor, t: torch.Tensor):
+        """
+        This method predicts the noise given x_t.
+
+        parameters:
+            x_t: torch.Tensor
+                The sample at time t.
+            t: float
+                The time step.
+        returns:
+            noise: torch.Tensor
+                The predicted noise.
+        """
+
+        if self.estimator_type == 'mean':
+            raise NotImplementedError
+        elif self.estimator_type == 'score':
+            raise NotImplementedError
+        elif self.estimator_type == 'noise':
+            return self.diffusion_backbone(x_t, t)
     
 
 

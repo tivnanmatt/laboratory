@@ -77,7 +77,22 @@ class DiffusersUnet2D(torch.nn.Module):
         z_t_and_t = torch.cat([z_t, t_enc], dim=1)
 
         # now apply the UNet
-        return self.unet(z_t_and_t, t.squeeze())[0]
+        # noise_pred =  self.unet(z_t_and_t, t.squeeze())[0]
+
+        # noise = torch.randn_like(x_0)
+        # x_t = x_0 + sqrt(t) * noise
+        # noise = (x_t - x_0)/ sqrt(t)
+        # noise_pred = (x_t - x_0_pred)/ sqrt(t)
+        # x_0_pred = x_t - sqrt(t) * noise_pred
+
+        # residual = self.unet(z_t_and_t, t.squeeze())[0]
+
+        # z_0_pred = z_t - (torch.sqrt(t.unsqueeze(-1).unsqueeze(-1))) * residual
+
+        z_0_pred = self.unet(z_t_and_t, t.squeeze())[0]
+
+        return z_0_pred
+
 
        
 
