@@ -1,0 +1,1792 @@
+Listing directories and files starting from .:
+
+./
+    cli.py
+./
+    Dockerfile
+./
+    environment.yml
+./
+    env_setup.sh
+./
+    main.py
+./
+    print_code.py
+./
+    README.md
+./
+    setup.py
+./
+    startup.sh
+    laboratory/
+        __init__.py
+            article_writer/
+                app.py
+            article_writer/
+                forms.py
+            article_writer/
+                models.py
+            article_writer/
+                run.sh
+                static/
+                    styles.css
+                templates/
+                    article.html
+                templates/
+                    index.html
+            llm_model_observer/
+                1932_001 (1).pdf
+            llm_model_observer/
+                1932_001.pdf
+            llm_model_observer/
+                ACFrOgAT588kf72vtcsBwvZy6aRf5FJM9J2UZuwr6i76tkGteYy_YMgemg6Z_-p1UTS1v6ZPGheoXButXclK25i9CE7YJ3e7JNmBvxnbHt9PQBDIvsvlOb42ZV_aYcLj9nxWBRvDaMJCVFs8.pdf
+            llm_model_observer/
+                Closing_-_Closing_Disclosure_(Purchase).pdf
+            llm_model_observer/
+                main.py
+            llm_model_observer/
+                openai_api_key.txt
+                figures/
+                    out.txt
+            research_assistant/
+                main.py
+        torch/
+            __init__.py
+            datasets/
+                __init__.py
+            diffusion/
+                core.py
+            diffusion/
+                sde.py
+            diffusion/
+                unconditional.py
+            diffusion/
+                __init__.py
+            distributions/
+                core.py
+            distributions/
+                dataset.py
+            distributions/
+                gaussian.py
+            distributions/
+                __init__.py
+            linalg/
+                core.py
+            linalg/
+                fourier.py
+            linalg/
+                interp.py
+            linalg/
+                misc.py
+            linalg/
+                permute.py
+            linalg/
+                polar.py
+            linalg/
+                sparse.py
+            linalg/
+                __init__.py
+            networks/
+                densenet.py
+            networks/
+                __init__.py
+            samplers/
+                core.py
+            samplers/
+                __init__.py
+            sde/
+                sde.py
+            sde/
+                __init__.py
+            tasks/
+                reconstruction.py
+            tasks/
+                __init__.py
+    laboratory.egg-info/
+        dependency_links.txt
+    laboratory.egg-info/
+        entry_points.txt
+    laboratory.egg-info/
+        PKG-INFO
+    laboratory.egg-info/
+        SOURCES.txt
+    laboratory.egg-info/
+        top_level.txt
+
+================================================================================
+
+Printing classes, functions, methods, subclasses, and docstrings from all .py files starting from .:
+
+
+--- Contents of .\cli.py ---
+
+def main():
+
+================================================================================
+
+
+--- Contents of .\environment.yml ---
+
+name: laboratory
+channels:
+  - conda-forge
+  - defaults
+  - nvidia/label/cuda-12.4.1
+dependencies:
+  - python=3.11
+  - pip
+  - cmake>=3.23
+  - ffmpeg
+  - cuda-toolkit=12.4.1
+  - pyyaml
+  - matplotlib
+  - scipy 
+  - numpy
+  - pip:
+    - pyyaml
+    - matplotlib
+    - scipy 
+    - numpy==1.25
+    - torch
+    - torchvision
+    - torchaudio
+    - --index-url https://download.pytorch.org/whl/cu124
+
+================================================================================
+
+
+--- Contents of .\env_setup.sh ---
+
+#!/bin/bash
+
+# Create the conda environment
+conda env create --name laboratory --file environment.yml
+
+# Activate the conda environment
+source activate laboratory
+
+# Run the post-install script
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+echo "Environment setup complete. Use 'conda activate laboratory' to activate the environment."
+
+================================================================================
+
+
+--- Contents of .\main.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\print_code.py ---
+
+def should_ignore():
+def extract_classes_and_functions():
+def print_file_contents():
+    """Print the full contents of a file."""
+def print_directories_and_files():
+def print_python_files_content():
+
+================================================================================
+
+
+--- Contents of .\README.md ---
+
+# README for the laboratory project
+
+================================================================================
+
+
+--- Contents of .\setup.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\startup.sh ---
+
+#!/bin/bash
+
+# # Start MariaDB
+# service mariadb start
+# mysql < /docker-entrypoint-initdb.d/init.sql
+
+# # Start PHP-FPM
+# service php8.1-fpm start
+
+# # Remove default Nginx site configuration
+# rm /etc/nginx/sites-enabled/default
+
+# # Start Nginx
+# service nginx start
+
+# Keep the container running
+tail -f /dev/null
+
+================================================================================
+
+
+--- Contents of .\laboratory\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\apps\article_writer\app.py ---
+
+def index():
+
+================================================================================
+
+
+--- Contents of .\laboratory\apps\article_writer\forms.py ---
+
+class SubsectionForm:
+class SectionForm:
+class ResearchForm:
+
+================================================================================
+
+
+--- Contents of .\laboratory\apps\article_writer\models.py ---
+
+class Article:
+    def __init__():
+    def latex():
+    def markdown():
+class Section:
+    def __init__():
+    def latex():
+    def markdown():
+class Subsection:
+    def __init__():
+    def latex():
+    def markdown():
+
+================================================================================
+
+
+--- Contents of .\laboratory\apps\article_writer\run.sh ---
+
+#!/bin/bash
+
+# Default port
+PORT=80
+
+# Parse command line arguments for --port
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --port) PORT="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+export FLASK_APP=app.py
+export FLASK_ENV=development
+flask run --host=0.0.0.0 --port=$PORT
+
+================================================================================
+
+
+--- Contents of .\laboratory\apps\llm_model_observer\main.py ---
+
+def encode_image():
+def add_noise():
+def generate_radiology_report():
+def radiology_report_evaluator():
+def create_image_report_plot():
+def main():
+
+================================================================================
+
+
+--- Contents of .\laboratory\apps\research_assistant\main.py ---
+
+def gpt3turbo_complete():
+def execute_command():
+def log_interaction():
+    """Log the interaction to the history
+
+Args:
+    log: The log of previous interactions
+    user_input: The user's input
+    assistant_response: The assistant's response
+    system_message: Any system messages
+
+Returns:
+    The updated log as a string"""
+def extract_bash_code_block():
+    """Extract the bash code block from the response
+
+Args:
+    response: The response from the assistant
+
+Returns:
+    The extracted bash code block as a string"""
+def main():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\datasets\__init__.py ---
+
+class Medmnist_OrganA:
+    def __init__():
+    def __len__():
+    def __getitem__():
+    def sample():
+    def to():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\diffusion\core.py ---
+
+class UnconditionalDiffusionBackbone:
+    def __init__():
+        """This is an abstract base class for diffusion backbones.
+
+It inherits from torch.nn.Module.
+
+parameters:
+    None"""
+    def forward():
+        """This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the linear operator.
+returns:
+    result: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The result of applying the linear operator to the input tensor."""
+class UnconditionalDiffusionModel:
+    def __init__():
+        """This is an abstract base class for diffusion models.
+
+It inherits from torch.nn.Module.
+
+It requires the methods sample_x_t_given_x_0 and sample_x_t_minus_dt_given_x_t to be implemented.
+
+parameters:
+    None"""
+    def forward():
+        """This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the linear operator.
+returns:
+    result: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The result of applying the linear operator to the input tensor."""
+    def sample_x_t_given_x_0():
+        """This method samples x_t given x_0.
+
+parameters:
+    x_0: torch.Tensor 
+        The initial condition.
+    t: float
+        The time step.
+returns:
+    x_t: torch.Tensor
+        The sample at time t."""
+    def forward_sample():
+        """This method samples from the forward SDE.
+
+parameters:
+    x: torch.Tensor
+        The initial condition.
+    timesteps: int
+        The number of timesteps to sample.
+    sampler: str
+        The method used to compute the forward update. Currently, only 'euler' and 'heun' are supported.
+returns:
+    x: torch.Tensor
+        The output tensor."""
+    def reverse_sample():
+        """This method samples from the reverse SDE.
+
+parameters:
+    x: torch.Tensor
+        The initial condition.
+    timesteps: int
+        The number of timesteps to sample.
+    sampler: str
+        The method used to compute the forward update. Currently, only 'euler' and 'heun' are supported.
+returns:
+    x: torch.Tensor
+        The output tensor."""
+    def predict_x_0_given_x_t():
+        """This method predicts x_0 given x_t.
+
+parameters:
+    x_t: torch.Tensor
+        The sample at time t.
+    t: float
+        The time step.
+returns:
+    x_0: torch.Tensor
+        The predicted initial condition."""
+class UnconditionalScoreBasedDiffusionModel:
+    def __init__():
+        """This is an abstract base class for unconditional score-based diffusion models.
+
+It inherits from torch.nn.Module.
+
+It requires the methods score, score_and_sample, and sample_x_t_given_x_0 to be implemented.
+
+parameters:
+    None"""
+    def score():
+        """This method calculates the score of the diffusion model at time t.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the diffusion model.
+    t: float
+        The time step.
+returns:
+    score: torch.Tensor
+        The score of the diffusion model at time t."""
+    def score_and_sample():
+        """This method calculates the score of the diffusion model at time t and samples x_t given x.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the diffusion model.
+    t: float
+        The time step.
+returns:
+    score: torch.Tensor
+        The score of the diffusion model at time t.
+    x_t: torch.Tensor
+        The sample at time t."""
+    def sample_x_t_given_x_0():
+        """This method samples x_t given x_0.
+
+parameters:
+    x_0: torch.Tensor 
+        The initial condition.
+    t: float
+        The time step.
+returns:
+    x_t: torch.Tensor
+        The sample at time t."""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\diffusion\sde.py ---
+
+class StochasticDifferentialEquation:
+    def __init__():
+        """This class implements an Ito stochastic differential equation (SDE) of the form 
+
+dx = f(x, t) dt + G(x, t) dw
+
+f is a vector-valued function of x and t representing the drift term 
+and G is a matrix-valued function of x and t representing the diffusion rate.
+
+parameters:
+    f: callable
+        The drift term of the SDE. It should take x and t as input and return a tensor of the same shape as x.
+    G: callable
+        The diffusion term of the SDE. It should take x and t as input and return a rtl.linalg.LinearOperator that can act on a tensor of the same shape as x."""
+    def forward():
+    def reverse_SDE_given_score_estimator():
+        """This method returns the time reversed StochasticDifferentialEquation given a score function estimator.
+
+The time reversed SDE is given by
+
+dx = f*(x, t) dt + G(x, t) dw
+
+where f*(x, t) = f(x, t) - div_x( G(x,t) G(x,t)^T ) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+parameters:
+    score_estimator: callable
+        The score estimator function that takes x, t, as input and returns the score function estimate.
+returns:
+    sde: StochasticDifferentialEquation
+        The time reversed SDE."""
+    def sample():
+        """This method samples from the SDE.
+
+parameters:
+    x: torch.Tensor
+        The initial condition.
+    timesteps: int
+        The number of timesteps to sample.
+    sampler: str
+        The method used to compute the forward update. Currently, only 'euler' and 'heun' are supported.
+returns:
+    x: torch.Tensor
+        The output tensor."""
+    def _sample_step():
+        """This method computes the forward update of the SDE.
+
+The forward SDE is given by
+
+dx = f(x, t) dt + G(x, t) dw
+
+parameters:
+    x: torch.Tensor
+        The input tensor.
+    t: float
+        The time at which the SDE is evaluated.
+    dt: float or torch.Tensor
+        The time step.
+    sampler: str
+        The method used to compute the forward update. Currently, 'euler' and 'heun' are supported.
+returns:
+    dx: torch.Tensor
+        The output tensor."""
+    def _sample_step_euler():
+        """This method computes the forward update of the SDE using the Euler-Maruyama method.
+
+The forward SDE is given by
+
+dx = f(x, t) dt + G(x, t) dw
+
+parameters:
+    x: torch.Tensor
+        The input tensor.
+    t: float
+        The time at which the SDE is evaluated.
+    dt: float or torch.Tensor
+        The time step.
+    dw: torch.Tensor
+        The Wiener process increment.
+returns:
+    dx: torch.Tensor
+        The output tensor."""
+    def _sample_step_heun():
+        """This method computes the forward update of the SDE using the Heun's method.
+
+The forward SDE is given by
+
+dx = f(x, t) dt + G(x, t) dw
+
+parameters:
+    x: torch.Tensor
+        The input tensor.
+    t: float
+        The time at which the SDE is evaluated.
+    dt: float or torch.Tensor
+        The time step.
+returns:
+    dx: torch.Tensor
+        The output tensor."""
+class HomogeneousSDE:
+    def __init__():
+        """This class implements a homogeneous stochastic differential equation (SDE) of the form:
+dx = F(t) @ x dt + G(t) dw
+where F and G are derived from H and Sigma if not directly provided.
+
+Parameters:
+    H: callable
+        Function that returns an InvertibleLinearOperator representing the system response.
+    Sigma: callable
+        Function that returns a SymmetricLinearOperator representing the covariance.
+    H_prime: callable, optional
+        Function that returns the time derivative of H. If not provided, it will be computed automatically.
+    Sigma_prime: callable, optional
+        Function that returns the time derivative of Sigma. If not provided, it will be computed automatically.
+    F: callable, optional
+        Function that returns a LinearOperator representing the drift term. If not provided, it will be computed from H_prime and H.
+    G: callable, optional
+        Function that returns a LinearOperator representing the diffusion term. If not provided, it will be computed from Sigma_prime, F, and Sigma.
+
+Requirements:
+    - H must return an InvertibleLinearOperator.
+    - Sigma must return a SymmetricLinearOperator.
+    - The @ operator must be implemented for matrix-matrix multiplication of F, Sigma, and their transposes.
+    - The addition, subtraction, and sqrt_LinearOperator methods must be implemented for the resulting matrix operations on Sigma_prime and others.
+
+If H_prime and Sigma_prime are not provided, they will be computed using automatic differentiation."""
+    def reverse_SDE_given_score_estimator():
+        """This method returns the time reversed StochasticDifferentialEquation given a score function estimator.
+
+The time reversed SDE is given by
+
+dx = f*(x, t) dt + G(x, t) dw
+
+where f*(x, t) = f(x, t) - div_x( G(x,t) G(x,t)^T ) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+parameters:
+    score_estimator: callable
+        The score estimator function that takes x, t, as input and returns the score function estimate.
+returns:
+    sde: StochasticDifferentialEquation
+        The time reversed SDE."""
+    def reverse_SDE_given_mean_estimator():
+        """This method returns the time reversed StochasticDifferentialEquation given a posterior mean estimator.
+
+The time reversed SDE is given by
+
+dx = f*(x, t) dt + G(x, t) dw
+
+where f*(x, t) = f(x, t) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+parameters:
+    mean_estimator: callable
+        Function that takes x and t as input and returns the estimated mean at time t.
+returns:
+    sde: StochasticDifferentialEquation
+        The time reversed SDE."""
+    def mean_response_x_t_given_x_0():
+        """Computes the mean response of x_t given x_0.
+
+Parameters:
+    x0: torch.Tensor
+        The initial condition.
+    t: float
+        The time at which the mean response is evaluated.
+
+Returns:
+    torch.Tensor
+        The mean response at time t."""
+    def sample_x_t_given_x_0():
+        """Samples x_t given x_0 using the mean response and adding Gaussian noise with covariance Sigma(t).
+
+Parameters:
+    x0: torch.Tensor
+        The initial condition.
+    t: float
+        The time at which the sample is evaluated.
+
+Returns:
+    torch.Tensor
+        The sampled response at time t."""
+    def reverse_SDE_given_mean_estimator():
+        """Constructs the reverse-time stochastic differential equation given a posterior mean estimator.
+
+The time-reversed SDE is given by:
+dx = f*(x, t) dt + G(x, t) dw
+where f*(x, t) = f(x, t) - G(x, t) G(x, t)^T score_estimator(x, t)
+and score_estimator(x, t) = Sigma(t)^(-1) @ (x - mu_t)
+
+Parameters:
+    mean_estimator: callable
+        Function that takes x and t as input and returns the estimated mean at time t.
+
+Returns:
+    StochasticDifferentialEquation
+        The reverse-time SDE."""
+class ScalarSDE:
+    def __init__():
+        """This class implements a scalar homogeneous stochastic differential equation (SDE).
+
+dx = f(t) x dt + g(t) dw
+
+Parameters:
+    signal_scale: callable
+        Function that returns a scalar representing the system response.
+    noise_variance: callable
+        Function that returns a scalar representing the covariance.
+    signal_scale_prime: callable, optional
+        Function that returns the time derivative of signal_scale. If not provided, it will be computed automatically.
+    noise_variance_prime: callable, optional
+        Function that returns the time derivative of noise_variance. If not provided, it will be computed automatically."""
+class DiagonalSDE:
+    def __init__():
+        """This class implements a diagonal homogeneous stochastic differential equation (SDE).
+
+Parameters:
+    signal_scale: callable
+        Function that returns a diagonal vector representing the system response.
+    noise_variance: callable
+        Function that returns a diagonal vector representing the covariance.
+    signal_scale_prime: callable, optional
+        Function that returns the time derivative of signal_scale. If not provided, it will be computed automatically.
+    noise_variance_prime: callable, optional
+        Function that returns the time derivative of noise_variance. If not provided, it will be computed automatically."""
+class FourierSDE:
+    def __init__():
+        """This class implements a Fourier homogeneous stochastic differential equation (SDE).
+
+Parameters:
+    transfer_function: callable
+        Function that returns a Fourier filter representing the system response.
+    noise_power_spectrum: callable
+        Function that returns a Fourier filter representing the covariance.
+    dim: int
+        The number of dimensions for the Fourier transform.
+    transfer_function_prime: callable, optional
+        Function that returns the time derivative of transfer_function. If not provided, it will be computed automatically.
+    noise_power_spectrum_prime: callable, optional
+        Function that returns the time derivative of noise_power_spectrum. If not provided, it will be computed automatically."""
+class SongVarianceExplodingProcess:
+    def __init__():
+        """This class implements a Song variance-exploding process, which is a mean-reverting process with a variance-exploding term.
+
+parameters:
+    sigma_1: float
+        The standard deviation at t=1 (the variance at t=1 is G*G^T = sigma_1^2)"""
+class SongVariancePreservingProcess:
+    def __init__():
+        """This class implements a Song variance-preserving process, which is a mean-reverting process with a variance-preserving term.
+
+parameters:
+    beta: float
+        The variance-preserving coefficient."""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\diffusion\unconditional.py ---
+
+class UnconditionalDiffusionModel:
+    def __init__():
+    def sample():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\diffusion\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\distributions\core.py ---
+
+class Sampler:
+    def __init__():
+    def sample():
+    def forward():
+class Distribution:
+    def __init__():
+    def log_prob():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\distributions\dataset.py ---
+
+class DatasetSampler:
+    def __init__():
+    def sample():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\distributions\gaussian.py ---
+
+class GaussianDistribution:
+    def __init__():
+    def sample():
+    def mahalanobis_distance():
+    def log_prob():
+class ConditionalGaussianDistribution:
+    def __init__():
+    def evaluate():
+    def sample():
+    def log_prob():
+    def mahalanobis_distance():
+class LinearSystemGaussianNoise:
+    def __init__():
+class AdditiveWhiteGaussianNoise:
+    def __init__():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\distributions\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\core.py ---
+
+class LinearOperator:
+    def __init__():
+        """This is an abstract class for linear operators.
+
+It inherits from torch.nn.Module.
+
+It requires the methods forward and adjoint to be implemented.
+
+parameters:
+    None"""
+    def forward():
+        """This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the linear operator.
+returns:
+    result: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The result of applying the linear operator to the input tensor."""
+    def forward_LinearOperator():
+    def transpose():
+        """This method returns the transpose of the linear operator.
+
+parameters:
+    y: torch.Tensor
+        The input tensor to the transpose of the linear operator.
+
+returns:
+    z: torch.Tensor
+        The transpose of the linear operator applied to y"""
+    def transpose_LinearOperator():
+    def conjugate():
+        """This method returns the conjugate of the linear operator.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the conjugate of the linear operator.
+
+returns:
+    conjugate: LinearOperator object
+        The conjugate of the linear operator."""
+    def conjugate_LinearOperator():
+    def conjugate_transpose():
+        """This method implements the adjoint pass of the linear operator, i.e. the conjugate-transposed matrix-vector product.
+
+parameters:
+    y: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The input tensor to the adjoint of the linear operator.
+returns:
+    z: torch.Tensor 
+        The result of applying the adjoint of the linear operator to the input tensor."""
+    def conjugate_transpose_LinearOperator():
+    def sqrt_LinearOperator():
+    def inv_LinearOperator():
+    def logdet():
+    def det():
+    def _pseudoinverse_weighted_average():
+        """This method implements the pseudoinverse of the linear operator using a weighted average.
+
+parameters:
+    y: torch.Tensor 
+        The input tensor to the pseudoinverse_weighted_average of the linear operator.
+returns:
+    x: torch.Tensor 
+        The result of applying the pseudoinverse_weighted_average of the linear operator to the input tensor."""
+    def _pseudoinverse_conjugate_gradient():
+        """This method implements the pseudoinverse of the linear operator using the conjugate gradient method.
+
+It solves the linear system (A^T A + beta * I) x = A^T b for x, where A is the linear operator.
+
+parameters:
+    b: torch.Tensor of shape
+        The input tensor to which the pseudo inverse of the linear operator should be applied.
+    max_iter: int
+        The maximum number of iterations to run the conjugate gradient method.
+    tol: float
+        The tolerance for the conjugate gradient method.
+    beta: float
+        The regularization strength for the conjugate gradient method.
+returns:
+    x_est: torch.Tensor
+        The result of applying the pseudoinverse_conjugate_gradient of the linear operator to the input tensor."""
+    def pseudoinverse():
+        """This method implements the pseudo inverse of the linear operator.
+
+parameters:
+    y: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The input tensor to which the pseudo inverse of the linear operator should be applied.
+    method: str
+        The method to use for computing the pseudo inverse. If None, the method is chosen automatically.
+    kwargs: dict
+        Keyword arguments to be passed to the method."""
+    def mat_add():
+    def mat_sub():
+    def mat_mul():
+    def __mul__():
+    def __add__():
+    def __sub__():
+    def __matmul__():
+class RealLinearOperator:
+    def __init__():
+        """This is an abstract class for real linear operators.
+
+It inherits from LinearOperator.
+
+parameters:
+    None"""
+    def conjugate():
+        """This method returns the conjugate of the linear operator.
+
+parameters:
+    x: torch.Tensor
+        The input tensor to the conjugate of the linear operator.
+
+returns:
+    conjugate: LinearOperator object
+        The conjugate of the linear operator."""
+    def conjugate_LinearOperator():
+    def conjugate_transpose():
+        """This method returns the conjugate transpose of the linear operator.
+
+parameters:
+    y: torch.Tensor
+        The input tensor to the conjugate_transpose of the linear operator.
+
+returns:
+    z: torch.Tensor
+        The conjugate_transpose of the linear operator."""
+    def conjugate_transpose_LinearOperator():
+class SquareLinearOperator:
+    def __init__():
+        """This is an abstract class for square linear operators.
+
+It inherits from LinearOperator.
+
+For square linear operators, the input and output shapes are the same.
+
+parameters:
+    None"""
+    def compute_input_shape_given_output_shape():
+        """This method computes the input shape given the output shape.
+
+parameters:
+    output_shape: tuple of integers
+        The shape of the output tensor, disregarding batch and channel dimensions.
+returns:
+    input_shape: tuple of integers
+        The shape of the input tensor, disregarding batch and channel dimensions."""
+class InvertibleLinearOperator:
+    def inverse():
+        """This method implements the inverse of the linear operator.
+
+parameters:
+    y: torch.Tensor 
+        The input tensor to which the inverse linear operator should be applied.
+returns:
+    x: torch.Tensor
+        The result of applying the inverse linear operator to the input tensor."""
+    def inverse_LinearOperator():
+        """This method returns the inverse of the linear operator.
+
+returns:
+    inverse: LinearOperator object
+        The inverse of the linear operator."""
+class UnitaryLinearOperator:
+    def __init__():
+        """This is an abstract class for unitary linear operators.
+
+It inherits from InvertibleLinearOperator.
+
+parameters:
+    None"""
+    def inverse():
+        """This method implements the inverse of the linear operator.
+
+parameters:
+    y: torch.Tensor 
+        The input tensor to which the inverse linear operator should be applied.
+returns:
+    x: torch.Tensor
+        The result of applying the inverse linear operator to the input tensor."""
+    def inverse_LinearOperator():
+class HermitianLinearOperator:
+    def __init__():
+        """This is an abstract class for Hermitian, or self-adjoint linear operators.
+
+It inherits from SquareLinearOperator.
+
+parameters:
+    None"""
+    def conjugate_transpose():
+    def conjugate_transpose_LinearOperator():
+    def conjugate():
+    def conjugate_LinearOperator():
+class SymmetricLinearOperator:
+    def __init__():
+        """This is an abstract class for Symmetric linear operators.
+
+It inherits from SquareLinearOperator.
+
+parameters:
+    None"""
+    def transpose():
+        """This method implements the transpose of the linear operator.
+
+parameters:
+    y: torch.Tensor
+        The input tensor to the transpose of the linear operator.
+returns:
+    z: torch.Tensor
+        The result of applying the transpose of the linear operator to the input tensor."""
+    def cojugate_transpose():
+        """This method implements the adjoint pass of the linear operator, i.e. the matrix-vector product with the adjoint.
+
+parameters:
+    y: torch.Tensor 
+        The input tensor to the adjoint of the linear operator.
+returns:
+    z: torch.Tensor 
+        The result of applying the adjoint of the linear operator to the input tensor."""
+    def transpose_LinearOperator():
+class ScalarLinearOperator:
+    def __init__():
+        """This class implements a scalar linear operator.
+
+It inherits from SymmetricLinearOperator.
+
+parameters:
+    scalar: float
+        The scalar to multiply the input tensor with."""
+    def forward():
+        """This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the linear operator.
+returns:
+    result: torch.Tensor 
+        The result of applying the linear operator to the input tensor."""
+    def conjugate():
+        """This method implements the adjoint pass of the linear operator, i.e. the conjugate-transposed matrix-vector product.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the adjoint of the linear operator.
+returns:
+    adj_result: torch.Tensor
+        The result of applying the adjoint of the linear operator to the input tensor."""
+    def inverse():
+    def inverse_LinearOperator():
+    def sqrt_LinearOperator():
+    def mat_add():
+    def mat_sub():
+    def mat_mul():
+class DiagonalLinearOperator:
+    def __init__():
+        """This class implements a diagonal linear operator.
+
+It inherits from SquareLinearOperator.
+
+parameters:
+    input_shape: tuple of integers
+        The shape of the input tensor, disregarding batch and channel dimensions.
+    diagonal_vector: torch.Tensor of shape [batch_size, num_channel, *input_shape]
+        The diagonal of the linear operator."""
+    def forward():
+        """This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+parameters:
+    x: torch.Tensor of shape [batch_size, num_channel, *input_shape]
+        The input tensor to the linear operator.
+returns:
+    result: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The result of applying the linear operator to the input tensor."""
+    def conjugate():
+    def inverse_LinearOperator():
+    def sqrt_LinearOperator():
+    def mat_add():
+    def mat_sub():
+    def mat_mul():
+class IdentityLinearOperator:
+    def __init__():
+        """This class implements the identity linear operator.
+
+It inherits from SquareLinearOperator.
+
+parameters:
+    None"""
+    def forward():
+        """This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+parameters:
+    x: torch.Tensor 
+        The input tensor to the linear operator.
+returns:
+    result: torch.Tensor 
+        The result of applying the linear operator to the input tensor."""
+class ConjugateLinearOperator:
+    def __init__():
+        """This is an abstract class for linear operators that are the conjugate of another linear operator.
+
+It inherits from LinearOperator.
+
+parameters:
+    base_matrix_operator: LinearOperator object
+        The linear operator to which the conjugate should be applied."""
+    def forward():
+    def conjugate():
+    def transpose():
+    def conjugate_transpose():
+class TransposeLinearOperator:
+    def __init__():
+        """This is an abstract class for linear operators that are the transpose of another linear operator.
+
+It inherits from LinearOperator.
+
+parameters:
+    base_matrix_operator: LinearOperator object
+        The linear operator to which the conjugate should be applied."""
+    def forward():
+    def conjugate():
+    def transpose():
+    def conjugate_transpose():
+class ConjugateTransposeLinearOperator:
+    def __init__():
+        """This is an abstract class for linear operators that are the conjugate transpose of another linear operator.
+
+It inherits from LinearOperator.
+
+parameters:
+    base_matrix_operator: LinearOperator object
+        The linear operator to which the conjugate should be applied."""
+    def forward():
+    def conjugate():
+    def transpose():
+    def conjugate_transpose():
+class InverseLinearOperator:
+    def __init__():
+        """This is an abstract class for linear operators that are the inverse of another linear operator.
+
+It inherits from SquareLinearOperator.
+
+parameters:
+    base_matrix_operator: LinearOperator object
+        The linear operator to which the inverse should be applied."""
+    def forward():
+    def inverse_LinearOperator():
+class CompositeLinearOperator:
+    def __init__():
+        """This class represents the matrix-matrix product of multiple linear operators.
+
+It inherits from LinearOperator.
+
+parameters:
+    operators: list of LinearOperator objects
+        The list of linear operators to be composed. The product is taken in the order they are provided."""
+    def forward():
+    def transpose():
+    def inverse():
+class InvertibleCompositeLinearOperator:
+    def __init__():
+        """This class represents the matrix-matrix product of multiple linear operators.
+
+It inherits from LinearOperator.
+
+parameters:
+    operators: list of LinearOperator objects
+        The list of linear operators to be composed. The product is taken in the order they are provided."""
+    def inverse():
+    def inverse_LinearOperator():
+class EigenDecomposedLinearOperator:
+    def __init__():
+        """This class represents a linear operator that is given by its eigenvalue decomposition.
+
+It inherits from CompositeLinearOperator and SymmetricLinearOperator
+
+parameters:
+    eigenvalue_matrix: DiagonalLinearOperator object
+        The diagonal matrix of eigenvalues.
+    eigenvector_matrix: InvertibleLinearOperator object
+        The invertible matrix of eigenvectors."""
+class SingularValueDecomposedLinearOperator:
+    def __init__():
+        """This class represents a linear operator that is given by its singular value decomposition.
+
+It inherits from SquareLinearOperator.
+
+parameters:
+    singular_values: DiagonalLinearOperator object
+        The diagonal matrix of singular values.
+    left_singular_vectors: UnitaryLinearOperator object
+        The matrix of left singular vectors.
+    right_singular_vectors: UnitaryLinearOperator object
+        The matrix of right singular vectors."""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\fourier.py ---
+
+class FourierTransform:
+    def __init__():
+        """This class implements a N-Dimensional Fourier transform that can be used in a PyTorch model.
+
+it assumes the central pixel in the image is at the center of the input tensor in all dimensions
+
+it returns the Fourier transform with the zero-frequency component in the center of the image"""
+    def forward():
+    def transpose():
+    def conjugate_transpose():
+class FourierLinearOperator:
+    def __init__():
+        """This class implementts a ND Fourier filter that can be used in a PyTorch model.
+
+it assumes the central pixel in the image is at the center of the input tensor in all dimensions
+
+it returns the Fourier filter applied to the input. """
+    def mat_add():
+    def mat_sub():
+    def mat_mul():
+class FourierConvolution:
+    def __init__():
+        """This class implements a 2D Fourier convolution that can be used in a PyTorch model.
+
+it assumes the central pixel in the image is at (0,0), including for the input kernel
+
+it returns the Fourier transform with the zero-frequency component in the center of the image"""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\interp.py ---
+
+class NearestNeighborInterpolator:
+    def __init__():
+        """This class implements a nearest neighbor interpolator that can be used in a PyTorch model.
+
+It inherits from the ColSparseLinearOperator class.
+
+The weights are precomputed using nearest neighbor interpolation.
+
+Parameters:
+    num_row: int
+        The number of rows of the input image.
+    num_col: int
+        The number of columns of the input image.
+    interp_points: torch.Tensor of shape [num_points, 2]
+        The coordinates of the interpolation points."""
+    def _2d_to_1d_indices():
+    def _1d_to_2d_indices():
+    def to():
+        """Override the to method to ensure that the a parameter is moved to the new device."""
+class BilinearInterpolator:
+    def __init__():
+        """This class implements a bilinear interpolator that can be used in a PyTorch model.
+
+It inherits from the ColSparseLinearOperator class.
+
+The weights are precomputed using bilinear interpolation.
+
+parameters:
+    num_row: int
+        The number of rows of the input image.
+    num_col: int
+        The number of columns of the input image.
+    interp_points: torch.Tensor of shape [num_points, 2]
+        The coordinates of the interpolation points."""
+    def _2d_to_1d_indices():
+    def _1d_to_2d_indices():
+    def to():
+        """Override the to method to ensure that the a parameter is moved to the new device."""
+class LanczosInterpolator:
+    def __init__():
+        """This class implements the Lanczos interpolation method that can be used in a PyTorch model.
+
+Lanczos resampling is a high-quality resampling method which uses the sinc function 
+for sharper downsampled images with less aliasing than simpler methods.
+
+Parameters:
+    num_row: int
+        The number of rows of the input image.
+    num_col: int
+        The number of columns of the input image.
+    interp_points: torch.Tensor of shape [num_points, 2]
+        The coordinates of the interpolation points.
+    kernel_size: int, default=3
+        The size of the kernel or filter."""
+    def _2d_to_1d_indices():
+    def _1d_to_2d_indices():
+    def _lanczos():
+        """Compute the Lanczos weight."""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\misc.py ---
+
+class RealPart:
+    def __init__():
+        """This class converts a complex tensor to a real tensor by taking the real part
+
+This is not truly a linear operator, but it can be used to convert a real-valued complex64 tensor to a float32 tensor"""
+    def forward():
+    def transpose():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\permute.py ---
+
+class Pad:
+    def __init__():
+        """This class implements a padding operator that can be used in a PyTorch model.
+
+it assumes the central pixel in the image is at (0,0)
+
+it returns the padded input"""
+    def forward():
+    def transpose():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\polar.py ---
+
+class PolarCoordinateResampler:
+    def __init__():
+        """This class implements a polar coordinate transformation that can be used in a PyTorch model.
+
+parameters:
+    num_row: int
+        The number of rows of the input image.
+    num_col: int
+        The number of columns of the input image.
+    theta_values: torch.Tensor of shape [num_theta]
+        The theta values, in radians, of the polar grid.
+    radius_values: torch.Tensor of shape [num_radius]
+        The radius values, in pixels, of the polar grid."""
+    def forward():
+        """This method implements the forward pass of the polar coordinate transformation.
+
+parameters:
+    x: torch.Tensor 
+        The input image to which the polar coordinate transformation should be applied.
+returns:
+    result: torch.Tensor 
+        The result of applying the polar coordinate transformation to the input image."""
+    def transpose():
+        """This method implements the transpose pass of the polar coordinate transformation.
+
+parameters:
+    y: torch.Tensor 
+        The input image to which the adjoint polar coordinate transformation should be applied.
+returns:
+    result: torch.Tensor 
+        The result of applying the adjoint polar coordinate transformation to the input image."""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\sparse.py ---
+
+class ColSparseLinearOperator:
+    def __init__():
+        """This class implements a column sparse linear operator that can be used in a PyTorch model.
+
+Column sparse linear operators have a small number of non-zero weights for each output element. 
+
+
+parameters:
+    input_shape: tuple of integers
+        The shape of the input tensor, disregarding batch and channel dimensions.
+    output_shape: tuple of integers
+        The shape of the output tensor, disregarding batch and channel dimensions.
+    indices: torch.Tensor of shape [num_weights, *output_shape]
+        The 1D indices of the flattened input tensor that each weight corresponds to.
+    weights: torch.Tensor of shape [num_weights, *output_shape]
+        The weights of the linear operator."""
+    def forward():
+        """This method implements the forward pass of the linear operator, i.e. the matrix-vector product.
+
+parameters:
+    x: torch.Tensor of shape [batch_size, num_channel, *input_shape]
+        The input tensor to the linear operator.
+returns:
+    result: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The result of applying the linear operator to the input tensor."""
+    def conjugate():
+    def transpose():
+        """This method implements the adjoint pass of the linear operator, i.e. the matrix-vector product with the adjoint.
+
+parameters:
+    x: torch.Tensor of shape [batch_size, num_channel, *output_shape]
+        The input tensor to the adjoint of the linear operator.
+returns:
+    result: torch.Tensor of shape [batch_size, num_channel, *input_shape]
+        The result of applying the adjoint of the linear operator to the input tensor."""
+    def to():
+class RowSparseLinearOperator:
+    """This class implements a row-column sparse linear operator that can be used in a PyTorch model.
+
+Row-column sparse linear operators have a small number of non-zero weights for each input element.
+
+parameters:
+    input_shape: tuple of integers
+        The shape of the input tensor, disregarding batch and channel dimensions.
+    output_shape: tuple of integers
+        The shape of the output tensor, disregarding batch and channel dimensions.
+    indices: torch.Tensor of shape [num_weights, *input_shape]
+        The 1D indices of the flattened output tensor that each weight corresponds to."""
+    def __init__():
+    def forward():
+    def conjugate():
+    def transpose():
+    def conjugate_transpose():
+    def to():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\linalg\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\networks\densenet.py ---
+
+class DenseNet:
+    def __init__():
+        """Initializes the DenseNet model with the specified parameters.
+
+Args:
+    input_shape (tuple): Shape of the input tensor.
+    output_shape (tuple): Shape of the output tensor.
+    hidden_channels_list (list): List of hidden layer sizes.
+    activation (str or list): Activation function to use or list of activation functions."""
+    def forward():
+        """Forward pass of the DenseNet model.
+
+Args:
+    x (torch.Tensor): Input tensor.
+
+Returns:
+    torch.Tensor: Output tensor."""
+    def get_activation():
+        """Returns the activation function based on the provided name.
+
+Args:
+    activation (str): Name of the activation function.
+
+Returns:
+    nn.Module: Activation function."""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\networks\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\samplers\core.py ---
+
+class Sampler:
+    def __init__():
+    def sample():
+    def forward():
+class Distribution:
+    def __init__():
+    def log_prob():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\samplers\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\sde\sde.py ---
+
+class StochasticDifferentialEquation:
+    def __init__():
+        """This class implements an Ito stochastic differential equation (SDE) of the form 
+
+dx = f(x, t) dt + G(x, t) dw
+
+f is a vector-valued function of x and t representing the drift term 
+and G is a matrix-valued function of x and t representing the diffusion rate.
+
+parameters:
+    f: callable
+        The drift term of the SDE. It should take x and t as input and return a tensor of the same shape as x.
+    G: callable
+        The diffusion term of the SDE. It should take x and t as input and return a rtl.linalg.LinearOperator that can act on a tensor of the same shape as x."""
+    def forward():
+    def reverse_SDE_given_score_estimator():
+        """This method returns the time reversed StochasticDifferentialEquation given a score function estimator.
+
+The time reversed SDE is given by
+
+dx = f*(x, t) dt + G(x, t) dw
+
+where f*(x, t) = f(x, t) - div_x( G(x,t) G(x,t)^T ) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+parameters:
+    score_estimator: callable
+        The score estimator function that takes x, t, as input and returns the score function estimate.
+returns:
+    sde: StochasticDifferentialEquation
+        The time reversed SDE."""
+    def sample():
+        """This method samples from the SDE.
+
+parameters:
+    x: torch.Tensor
+        The initial condition.
+    timesteps: int
+        The number of timesteps to sample.
+    sampler: str
+        The method used to compute the forward update. Currently, only 'euler' and 'heun' are supported.
+returns:
+    x: torch.Tensor
+        The output tensor."""
+    def _sample_step():
+        """This method computes the forward update of the SDE.
+
+The forward SDE is given by
+
+dx = f(x, t) dt + G(x, t) dw
+
+parameters:
+    x: torch.Tensor
+        The input tensor.
+    t: float
+        The time at which the SDE is evaluated.
+    dt: float or torch.Tensor
+        The time step.
+    sampler: str
+        The method used to compute the forward update. Currently, 'euler' and 'heun' are supported.
+returns:
+    dx: torch.Tensor
+        The output tensor."""
+    def _sample_step_euler():
+        """This method computes the forward update of the SDE using the Euler-Maruyama method.
+
+The forward SDE is given by
+
+dx = f(x, t) dt + G(x, t) dw
+
+parameters:
+    x: torch.Tensor
+        The input tensor.
+    t: float
+        The time at which the SDE is evaluated.
+    dt: float or torch.Tensor
+        The time step.
+    dw: torch.Tensor
+        The Wiener process increment.
+returns:
+    dx: torch.Tensor
+        The output tensor."""
+    def _sample_step_heun():
+        """This method computes the forward update of the SDE using the Heun's method.
+
+The forward SDE is given by
+
+dx = f(x, t) dt + G(x, t) dw
+
+parameters:
+    x: torch.Tensor
+        The input tensor.
+    t: float
+        The time at which the SDE is evaluated.
+    dt: float or torch.Tensor
+        The time step.
+returns:
+    dx: torch.Tensor
+        The output tensor."""
+class HomogeneousSDE:
+    def __init__():
+        """This class implements a homogeneous stochastic differential equation (SDE) of the form:
+dx = F(t) @ x dt + G(t) dw
+where F and G are derived from H and Sigma if not directly provided.
+
+Parameters:
+    H: callable
+        Function that returns an InvertibleLinearOperator representing the system response.
+    Sigma: callable
+        Function that returns a SymmetricLinearOperator representing the covariance.
+    H_prime: callable, optional
+        Function that returns the time derivative of H. If not provided, it will be computed automatically.
+    Sigma_prime: callable, optional
+        Function that returns the time derivative of Sigma. If not provided, it will be computed automatically.
+    F: callable, optional
+        Function that returns a LinearOperator representing the drift term. If not provided, it will be computed from H_prime and H.
+    G: callable, optional
+        Function that returns a LinearOperator representing the diffusion term. If not provided, it will be computed from Sigma_prime, F, and Sigma.
+
+Requirements:
+    - H must return an InvertibleLinearOperator.
+    - Sigma must return a SymmetricLinearOperator.
+    - The @ operator must be implemented for matrix-matrix multiplication of F, Sigma, and their transposes.
+    - The addition, subtraction, and sqrt_LinearOperator methods must be implemented for the resulting matrix operations on Sigma_prime and others.
+
+If H_prime and Sigma_prime are not provided, they will be computed using automatic differentiation."""
+    def reverse_SDE_given_score_estimator():
+        """This method returns the time reversed StochasticDifferentialEquation given a score function estimator.
+
+The time reversed SDE is given by
+
+dx = f*(x, t) dt + G(x, t) dw
+
+where f*(x, t) = f(x, t) - div_x( G(x,t) G(x,t)^T ) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+parameters:
+    score_estimator: callable
+        The score estimator function that takes x, t, as input and returns the score function estimate.
+returns:
+    sde: StochasticDifferentialEquation
+        The time reversed SDE."""
+    def reverse_SDE_given_mean_estimator():
+        """This method returns the time reversed StochasticDifferentialEquation given a mean function estimator.
+
+The time reversed SDE is given by
+
+dx = f*(x, t) dt + G(x, t) dw
+
+where f*(x, t) = f(x, t) - G(x, t) G(x, t)^T score_estimator(x, t)
+
+parameters:
+    mean_estimator: callable
+        The mean estimator function that takes x, t, as input and returns the mean function estimate.
+returns:
+    sde: StochasticDifferentialEquation
+        The time reversed SDE."""
+    def mean_response_x_t_given_x_0():
+        """Computes the mean response of x_t given x_0.
+
+Parameters:
+    x0: torch.Tensor
+        The initial condition.
+    t: float
+        The time at which the mean response is evaluated.
+
+Returns:
+    torch.Tensor
+        The mean response at time t."""
+    def sample_x_t_given_x_0():
+        """Samples x_t given x_0 using the mean response and adding Gaussian noise with covariance Sigma(t).
+
+Parameters:
+    x0: torch.Tensor
+        The initial condition.
+    t: float
+        The time at which the sample is evaluated.
+
+Returns:
+    torch.Tensor
+        The sampled response at time t."""
+    def reverse_SDE_given_posterior_mean_estimator():
+        """Constructs the reverse-time stochastic differential equation given a posterior mean estimator.
+
+The time-reversed SDE is given by:
+dx = f*(x, t) dt + G(x, t) dw
+where f*(x, t) = f(x, t) - G(x, t) G(x, t)^T score_estimator(x, t)
+and score_estimator(x, t) = Sigma(t)^(-1) @ (x - mu_t)
+
+Parameters:
+    posterior_mean_estimator: callable
+        Function that takes x and t as input and returns the estimated mean at time t.
+
+Returns:
+    StochasticDifferentialEquation
+        The reverse-time SDE."""
+class ScalarSDE:
+    def __init__():
+        """This class implements a scalar homogeneous stochastic differential equation (SDE).
+
+dx = f(t) x dt + g(t) dw
+
+Parameters:
+    signal_scale: callable
+        Function that returns a scalar representing the system response.
+    noise_variance: callable
+        Function that returns a scalar representing the covariance.
+    signal_scale_prime: callable, optional
+        Function that returns the time derivative of signal_scale. If not provided, it will be computed automatically.
+    noise_variance_prime: callable, optional
+        Function that returns the time derivative of noise_variance. If not provided, it will be computed automatically."""
+class DiagonalSDE:
+    def __init__():
+        """This class implements a diagonal homogeneous stochastic differential equation (SDE).
+
+Parameters:
+    signal_scale: callable
+        Function that returns a diagonal vector representing the system response.
+    noise_variance: callable
+        Function that returns a diagonal vector representing the covariance.
+    signal_scale_prime: callable, optional
+        Function that returns the time derivative of signal_scale. If not provided, it will be computed automatically.
+    noise_variance_prime: callable, optional
+        Function that returns the time derivative of noise_variance. If not provided, it will be computed automatically."""
+class FourierSDE:
+    def __init__():
+        """This class implements a Fourier homogeneous stochastic differential equation (SDE).
+
+Parameters:
+    transfer_function: callable
+        Function that returns a Fourier filter representing the system response.
+    noise_power_spectrum: callable
+        Function that returns a Fourier filter representing the covariance.
+    dim: int
+        The number of dimensions for the Fourier transform.
+    transfer_function_prime: callable, optional
+        Function that returns the time derivative of transfer_function. If not provided, it will be computed automatically.
+    noise_power_spectrum_prime: callable, optional
+        Function that returns the time derivative of noise_power_spectrum. If not provided, it will be computed automatically."""
+class SongVarianceExplodingProcess:
+    def __init__():
+        """This class implements a Song variance-exploding process, which is a mean-reverting process with a variance-exploding term.
+
+parameters:
+    sigma_1: float
+        The standard deviation at t=1 (the variance at t=1 is G*G^T = sigma_1^2)"""
+class SongVariancePreservingProcess:
+    def __init__():
+        """This class implements a Song variance-preserving process, which is a mean-reverting process with a variance-preserving term.
+
+parameters:
+    beta: float
+        The variance-preserving coefficient."""
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\sde\__init__.py ---
+
+
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\tasks\reconstruction.py ---
+
+class ImageReconstructionTask:
+    def __init__():
+    def sample_images():
+    def sample_measurements_given_images():
+    def sample_reconstructions_given_measurements():
+    def sample_measurements():
+    def sample_reconstructions():
+    def sample_reconstructions_given_images():
+    def sample():
+    def forward():
+    def train_reconstructor():
+class DiffusionBridgeImageReconstructor:
+    def __init__():
+    def forward():
+class DiffusionBridgeModel:
+    def __init__():
+    def train_diffusion_backbone():
+
+================================================================================
+
+
+--- Contents of .\laboratory\torch\tasks\__init__.py ---
+
+
+
+================================================================================
+

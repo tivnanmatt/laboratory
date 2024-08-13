@@ -1,4 +1,4 @@
-# Laboratory: Re-Usable Python Classes for Medical Image Reconstruction
+content = """# Laboratory: Re-Usable Python Classes for Medical Image Reconstruction
 
 ## Motivation
 
@@ -88,3 +88,7 @@ The repository is organized as follows:
 └── docker-compose.yml
 \`\`\`
 
+"""
+
+with open("README.md", "w", encoding="utf-8") as f:
+    f.write(content)
