@@ -1,4 +1,4 @@
-# Laboratory: Re-Usable Python Classes for Medical Image Reconstruction
+content = """# Laboratory: Re-Usable Python Classes for Medical Image Reconstruction
 
 ## Motivation
 
@@ -11,41 +11,41 @@ This project is focused on creating re-usable Python classes that represent math
 To install the necessary dependencies and set up the environment locally:
 
 1. Clone the repository:
-    ```bash
+    """ + '`' + '`' + '`' + """bash
     git clone https://github.com/username/laboratory.git
     cd laboratory
-    ```
+    """ + '`' + '`' + '`' + """
 
 2. Create and activate the Conda environment:
-    ```bash
+    """ + '`' + '`' + '`' + """bash
     conda env create --name laboratory --file environment.yml
     conda activate laboratory
-    ```
+    """ + '`' + '`' + '`' + """
 
 3. Install additional dependencies:
-    ```bash
+    """ + '`' + '`' + '`' + """bash
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
-    ```
+    """ + '`' + '`' + '`' + """
 
 ### Docker Installation
 
 To run the project using Docker:
 
 1. Build the Docker image:
-    ```bash
+    """ + '`' + '`' + '`' + """bash
     docker build -t laboratory .
-    ```
+    """ + '`' + '`' + '`' + """
 
 2. Run the Docker container:
-    ```bash
+    """ + '`' + '`' + '`' + """bash
     docker run -it --rm laboratory
-    ```
+    """ + '`' + '`' + '`' + """
 
 ## Directory Structure
 
 The repository is organized as follows:
 
-```
+""" + '`' + '`' + '`' + """
 .
 ├── cli.py                         # Command-line interface script for the project
 ├── Dockerfile                     # Dockerfile for containerizing the project
@@ -100,7 +100,7 @@ The repository is organized as follows:
 │   │   ├── core.py                # Core sampling logic
 │   │   └── __init__.py            # Initialization script for samplers
 └── docker-compose.yml             # Docker Compose configuration file
-```
+""" + '`' + '`' + '`' + """
 
 ## Usage
 
@@ -108,9 +108,29 @@ The repository is organized as follows:
 
 The `cli.py` script provides a command-line interface for interacting with the project. Run it with:
 
-```bash
+""" + '`' + '`' + '`' + """bash
 python cli.py
-```
+""" + '`' + '`' + '`' + """
+
+### Example Applications
+
+#### Article Writer
+
+To run the article writer application, navigate to the `laboratory/apps/article_writer` directory and run:
+
+""" + '`' + '`' + '`' + """bash
+bash run.sh
+""" + '`' + '`' + '`' + """
+
+This will start a local server where you can interact with the article writer interface.
+
+#### Research Assistant
+
+The research assistant application in `laboratory/apps/research_assistant` provides tools to assist in various research tasks. Run it with:
+
+""" + '`' + '`' + '`' + """bash
+python main.py
+""" + '`' + '`' + '`' + """
 
 ### Torch Modules
 
@@ -123,3 +143,7 @@ Contributions to this project are welcome. Please open an issue or submit a pull
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+"""
+
+with open("README.md", "w", encoding="utf-8") as f:
+    f.write(content)
